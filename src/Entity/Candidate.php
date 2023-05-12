@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CandidateRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -23,7 +24,7 @@ class Candidate
     private ?string $searchedPost = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $disponibility = null;
+    private ?DateTimeInterface $disponibility = null;
 
     #[ORM\Column(length: 255)]
     private ?string $cv = null;
@@ -69,12 +70,12 @@ class Candidate
         return $this;
     }
 
-    public function getDisponibility(): ?\DateTimeInterface
+    public function getDisponibility(): ?DateTimeInterface
     {
         return $this->disponibility;
     }
 
-    public function setDisponibility(\DateTimeInterface $disponibility): self
+    public function setDisponibility(DateTimeInterface $disponibility): self
     {
         $this->disponibility = $disponibility;
 
