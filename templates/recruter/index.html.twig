@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Recruter index{% endblock %}
+
+{% block body %}
+    <h1>Recruter index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Domain</th>
+                <th>CompanyName</th>
+                <th>Address</th>
+                <th>Address2</th>
+                <th>City</th>
+                <th>PostalCode</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for recruter in recruters %}
+            <tr>
+                <td>{{ recruter.id }}</td>
+                <td>{{ recruter.domain }}</td>
+                <td>{{ recruter.companyName }}</td>
+                <td>{{ recruter.address }}</td>
+                <td>{{ recruter.address2 }}</td>
+                <td>{{ recruter.city }}</td>
+                <td>{{ recruter.postalCode }}</td>
+                <td>
+                    <a href="{{ path('app_recruter_show', {'id': recruter.id}) }}">show</a>
+                    <a href="{{ path('app_recruter_edit', {'id': recruter.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_recruter_new') }}">Create new</a>
+{% endblock %}
