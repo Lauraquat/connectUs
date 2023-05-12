@@ -1,6 +1,10 @@
-body {
+html{
     height: 100%;
-    width: 100%;
+}
+
+body {
+    height: 100% ;
+    width: 100% ;
 }
 
 .containerPageRegister {
@@ -40,6 +44,8 @@ body {
    color: white
 }  
 
+
+
 .formRegistration{
     display: flex;
     flex-direction: column;
@@ -65,9 +71,16 @@ body {
 
 form {
     width: 60%;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 h1 {
     font-size: 20px;
+}
+
+.connexionTitle {
+    text-align: center;
+    padding-bottom: 2rem;
 }
 
