@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,13 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('/'));
+        /** @var User $user */
+        $user = $token->getUser();
+        if ($user->getType() == "Candidat") {
+           return new RedirectResponse($this->urlGenerator->generate('app_candidate_account'));
+        }else{
+            return new RedirectResponse($this->urlGenerator->generate('app_recruter_account'));
+        }
     }
 
     protected function getLoginUrl(Request $request): string

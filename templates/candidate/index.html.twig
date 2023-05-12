@@ -12,7 +12,6 @@
                 <th>City</th>
                 <th>SearchedPost</th>
                 <th>Disponibility</th>
-                <th>Cv</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,11 +21,9 @@
                 <td>{{ candidate.id }}</td>
                 <td>{{ candidate.city }}</td>
                 <td>{{ candidate.searchedPost }}</td>
-                <td>{{ candidate.disponibility ? candidate.disponibility|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ candidate.cv }}</td>
+                <td>{{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}</td>
                 <td>
                     <a href="{{ path('app_candidate_show', {'id': candidate.id}) }}">show</a>
-                    <a href="{{ path('app_candidate_edit', {'id': candidate.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -37,5 +34,4 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_candidate_new') }}">Create new</a>
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Recruter;
+use App\Entity\User;
 use App\Form\RecruterType;
 use App\Repository\RecruterRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -30,8 +31,10 @@ class RecruterController extends AbstractController
         $form = $this->createForm(RecruterType::class, $recruter);
         $form->handleRequest($request);
 
+        /** @var User $user */
+        $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            $recruter->setOwner($this->getUser());
+            $recruter->setOwner($user);
             $recruterRepository->save($recruter, true);
 
             return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
@@ -51,7 +54,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_recruter_edit', methods: ['GET', 'POST'])]
+    #[Route('/account', name: 'app_recruter_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recruter $recruter, RecruterRepository $recruterRepository): Response
     {
         $form = $this->createForm(RecruterType::class, $recruter);
@@ -60,7 +63,7 @@ class RecruterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $recruterRepository->save($recruter, true);
 
-            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('recruter/edit.html.twig', [
