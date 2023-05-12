@@ -5,16 +5,20 @@ namespace App\Controller;
 use App\Entity\Candidate;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Security\LoginFormAuthenticator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 
 #[Route('/candidate')]
-#[IsGranted('ROLE_USER')]
+// #[IsGranted('ROLE_USER')]
 class CandidateController extends AbstractController
 {
+    #[IsGranted('ROLE_USER')]
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
     public function index(CandidateRepository $candidateRepository): Response
     {
@@ -22,6 +26,36 @@ class CandidateController extends AbstractController
             'candidates' => $candidateRepository->findAll(),
         ]);
     }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/account', name: 'app_candidate_account', methods: ['GET', 'POST'])]
+    public function account(Request $request, CandidateRepository $candidateRepository, TokenInterface $token, UserAuthenticatorInterface $userAuthenticator, LoginFormAuthenticator $authenticator): Response
+    {
+        $user = $this->getUser();
+
+        $candidate = new Candidate();
+        $candidate->setOwner($user);
+
+        $form = $this->createForm(CandidateType::class, $candidate);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $candidateRepository->save($candidate, true);
+
+            return $userAuthenticator->authenticateUser(
+                $user,
+                $authenticator,
+                $request
+            );
+            // return $this->redirectToRoute('app_recruteur_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('candidate/edit.html.twig', [
+            'candidate' => $candidate,
+            'form' => $form,
+        ]);
+    }
+
 
     #[Route('/new', name: 'app_candidate_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CandidateRepository $candidateRepository): Response
@@ -35,7 +69,7 @@ class CandidateController extends AbstractController
             $candidate->setOwner($this->getUser());
             $candidateRepository->save($candidate, true);
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('candidate/new.html.twig', [
@@ -44,6 +78,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_candidate_show', methods: ['GET'])]
     public function show(Candidate $candidate): Response
     {
@@ -52,6 +87,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}/edit', name: 'app_candidate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository): Response
     {
@@ -61,7 +97,7 @@ class CandidateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $candidateRepository->save($candidate, true);
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('candidate/edit.html.twig', [
@@ -70,6 +106,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: 'app_candidate_delete', methods: ['POST'])]
     public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository): Response
     {
