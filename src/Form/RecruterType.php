@@ -15,7 +15,7 @@ class RecruterType extends AbstractType
             ->add('domain')
             ->add('companyName')
             ->add('address')
-            ->add('address2')
+            ->add('address2') //TODO not required
             ->add('city')
             ->add('postalCode')
         ;

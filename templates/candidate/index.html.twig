@@ -12,7 +12,6 @@
                 <th>City</th>
                 <th>SearchedPost</th>
                 <th>Disponibility</th>
-                <th>Cv</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,8 +21,7 @@
                 <td>{{ candidate.id }}</td>
                 <td>{{ candidate.city }}</td>
                 <td>{{ candidate.searchedPost }}</td>
-                <td>{{ candidate.disponibility ? candidate.disponibility|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ candidate.cv }}</td>
+                <td>{{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}</td>
                 <td>
                     <a href="{{ path('app_candidate_show', {'id': candidate.id}) }}">show</a>
                 </td>
@@ -36,5 +34,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_candidate_new') }}">Create new</a>
+    {% if not app.user.hasProfile() %}
+        <a href="{{ path('app_recruter_new') }}">Créer mon profil</a>
+    {% else %}
+        <a href="{{ path('app_recruter_edit', {'id': app.user.recruter.id}) }}">Modifier mon profil</a>
+    {% endif %}
 {% endblock %}

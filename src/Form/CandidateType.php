@@ -12,10 +12,10 @@ class CandidateType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('city')
+            ->add('city') //Add postal Code? (in entity too)
             ->add('searchedPost')
-            ->add('disponibility')
-            ->add('cv')
+            ->add('disponibility') //TODO change format
+            ->add('cv') //TODO add CV from computer
         ;
     }
 
