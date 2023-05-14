@@ -37,7 +37,7 @@ class RecruterController extends AbstractController
             $recruter->setOwner($user);
             $recruterRepository->save($recruter, true);
 
-            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('recruter/new.html.twig', [
@@ -54,7 +54,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
-    #[Route('/account', name: 'app_recruter_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/edit', name: 'app_recruter_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recruter $recruter, RecruterRepository $recruterRepository): Response
     {
         $form = $this->createForm(RecruterType::class, $recruter);
@@ -72,6 +72,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_recruter_delete', methods: ['POST'])]
     public function delete(Request $request, Recruter $recruter, RecruterRepository $recruterRepository): Response
     {
@@ -79,6 +80,6 @@ class RecruterController extends AbstractController
             $recruterRepository->remove($recruter, true);
         }
 
-        return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
     }
 }

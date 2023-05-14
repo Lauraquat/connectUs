@@ -30,7 +30,6 @@
                 <td>{{ recruter.postalCode }}</td>
                 <td>
                     <a href="{{ path('app_recruter_show', {'id': recruter.id}) }}">show</a>
-                    <a href="{{ path('app_recruter_edit', {'id': recruter.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -41,5 +40,9 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_recruter_new') }}">Create new</a>
+    {% if not app.user.hasProfile() %}
+        <a href="{{ path('app_candidate_new') }}">Créer mon profil</a>
+    {% else %}
+        <a href="{{ path('app_candidate_edit', {'id': app.user.candidate.id}) }}">Modifier mon profil</a>
+    {% endif %}
 {% endblock %}

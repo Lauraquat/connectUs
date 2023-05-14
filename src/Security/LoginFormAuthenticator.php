@@ -49,10 +49,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         /** @var User $user */
         $user = $token->getUser();
-        if ($user->getType() == "Candidat") {
-           return new RedirectResponse($this->urlGenerator->generate('app_candidate_account'));
+        if ($user->isCandidate()) {
+           return new RedirectResponse($this->urlGenerator->generate('app_recruter_index'));
         }else{
-            return new RedirectResponse($this->urlGenerator->generate('app_recruter_account'));
+            return new RedirectResponse($this->urlGenerator->generate('app_candidate_index'));
         }
     }
 
