@@ -7,6 +7,63 @@ body {
     width: 100% ;
 }
 
+.homepageContainer {
+    width: 100%;
+    height: 100%;
+    color: #3D4E63;
+}
+
+.homeTitle {
+    font-size: 70px;
+    margin-bottom: 2rem;
+}
+
+.homeSubtitle {
+    font-size: 20px;
+    margin-bottom: 1rem;
+}
+
+.homePicture {
+    width: 40%;
+    height: auto;
+    border-radius: 70%;
+    margin-top: 4rem;
+}
+
+.homepageFirstSection {
+    padding: 2rem 3rem 2rem 3rem;
+    display: flex;
+    flex-direction: row;
+    gap: 7rem;
+}
+
+.homepageSecondSection {
+    padding:5rem;
+    background-color: #3D4E63;
+    color: white;
+    height: 100%;   
+}
+
+.homepageSecondSectionSubtitle {
+    font-size: 36px;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.homepageInformation {
+    font-size: 16px;
+    margin: 2rem;
+    text-align: center;
+}
+
+.homepageButton {
+    background-color: #3D4E63;
+    color: white;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+/* register and login page */
 .containerPageRegister {
     display: flex;
     flex-direction: row;
@@ -44,8 +101,6 @@ body {
    color: white
 }  
 
-
-
 .formRegistration{
     display: flex;
     flex-direction: column;
@@ -75,7 +130,7 @@ form {
     margin-bottom: auto;
 }
 
-h1 {
+.registerTitle {
     font-size: 20px;
 }
 
