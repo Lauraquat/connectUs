@@ -10,10 +10,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/recruter')]
-#[IsGranted('ROLE_USER')]
 class RecruterController extends AbstractController
 {
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
@@ -72,14 +73,15 @@ class RecruterController extends AbstractController
         ]);
     }
 
-
     #[Route('/{id}', name: 'app_recruter_delete', methods: ['POST'])]
-    public function delete(Request $request, Recruter $recruter, RecruterRepository $recruterRepository): Response
+    public function delete(Request $request, Recruter $recruter, RecruterRepository $recruterRepository, SessionInterface $session): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recruter->getId(), $request->request->get('_token'))) {
+            $session = new Session();
+            $session->invalidate();
             $recruterRepository->remove($recruter, true);
         }
 
-        return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
     }
 }
