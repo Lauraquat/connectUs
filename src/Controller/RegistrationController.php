@@ -31,6 +31,12 @@ class RegistrationController extends AbstractController
                 )
             );
 
+            if ($user->isCandidate()) {
+                $user->setRoles(['ROLE_CANDIDATE']);
+            }else{
+                $user->setRoles(['ROLE_RECRUTER']);
+            }
+
             $entityManager->persist($user);
             $entityManager->flush();
             // do anything else you need here, like send an email

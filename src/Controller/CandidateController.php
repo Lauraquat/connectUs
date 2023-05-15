@@ -13,7 +13,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/candidate')]
-#[IsGranted('ROLE_USER')]
 class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
@@ -77,6 +76,6 @@ class CandidateController extends AbstractController
             $candidateRepository->remove($candidate, true);
         }
 
-        return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
     }
 }
