@@ -43,6 +43,7 @@ security:
          - { path: ^/recruter/(\d+) }, roles: [ ROLE_CANDIDATE] }
          - { path: ^/recruter, roles: [ROLE_CANDIDATE] }
 
+
 when@test:
     security:
         password_hashers:
