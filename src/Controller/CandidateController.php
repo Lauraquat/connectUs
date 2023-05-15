@@ -10,6 +10,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/candidate')]
@@ -70,9 +72,11 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_candidate_delete', methods: ['POST'])]
-    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository): Response
+    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session): Response
     {
         if ($this->isCsrfTokenValid('delete'.$candidate->getId(), $request->request->get('_token'))) {
+            $session = new Session();
+            $session->invalidate();
             $candidateRepository->remove($candidate, true);
         }
 
