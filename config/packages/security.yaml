@@ -35,12 +35,12 @@ security:
          - { path: ^/candidate/new, roles: [ROLE_CANDIDATE] }
          - { path: ^/candidate/delete, roles: [ROLE_CANDIDATE] }
          - { path: ^/candidate/edit/(\d+), roles: [ROLE_CANDIDATE] }
-         - { path: ^/candidate/(\d+) }, roles: [ROLE_RECRUTER] }
+         - { path: ^/candidate/(\d+), roles: [ROLE_RECRUTER] }
          - { path: ^/candidate, roles: [ROLE_RECRUTER] }
          - { path: ^/recruter/new, roles: [ ROLE_RECRUTER] }
          - { path: ^/recruter/delete, roles: [ ROLE_RECRUTER] }
          - { path: ^/recruter/edit/(\d+), roles: [ ROLE_RECRUTER] }
-         - { path: ^/recruter/(\d+) }, roles: [ ROLE_CANDIDATE] }
+         - { path: ^/recruter/(\d+), roles: [ ROLE_CANDIDATE] }
          - { path: ^/recruter, roles: [ROLE_CANDIDATE] }
 
 

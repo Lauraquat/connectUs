@@ -76,6 +76,6 @@ class CandidateController extends AbstractController
             $candidateRepository->remove($candidate, true);
         }
 
-        return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
