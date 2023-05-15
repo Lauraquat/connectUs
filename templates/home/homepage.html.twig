@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Homepage{% endblock %}
+
+{% block body %}
+ 
+        <div class="homepageContainer" >
+            <div class="homepageFirstSection">
+                    <div class="homepageRegister">
+                        <h1 class="homeTitle" >Welcome on </br> ConnectUs </h1>
+                        <h2 class="homeSubtitle">Subscribe or login to use the network
+                        </br>which is just waiting for you ! </h2>
+                        <a class="btn homepageButton " href="{{path("app_register")}}" >Subscribe </a>
+                        <a class="btn homepageButton " href="{{path("app_login")}}" >Login </a>
+                       
+                    </div>
+                    <img class="homePicture" src="{{ asset('images/home.jpg') }}"/>
+            </div>
+            <div class="homepageSecondSection">
+                <h2 class="homepageSecondSectionSubtitle">What is ConnectUs? </h2>
+                <p class="homepageInformation">
+               ConnectUs allows companies to find new employees.
+                As a company you can look at the </br> profiles of people
+                with a candidate profile. On these profiles you can see general informations, disponibility and CV. 
+                </p>
+                <p class="homepageInformation">
+                    If you are looking for jobs, with ConnectUs, you have access to a multitude of profiles
+                     companies and the jobs they offer.
+                </p>
+
+                <p class="homepageInformation">
+                Whether you are a recruiter or someone looking for jobs,
+                 you can show your interest </br>
+                    for a profile and you may be contacted by the company or candidate you need!
+                </p>
+            </div>
+        </div>       
+  
+{% endblock %}
