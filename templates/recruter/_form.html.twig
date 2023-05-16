@@ -1,4 +1,43 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    
+    <div class="containerCardNew">
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">General informations </h2>
+            <div class="formRow">
+                <div class="formCreateNew">
+                    {{ form_label(form.domain) }}
+                    {{ form_widget(form.domain) }}
+                </div>
+                <div class="formCreateNew">
+                    {{ form_label(form.companyName) }}
+                    {{ form_widget(form.companyName) }}
+                </div>
+            </div>
+        </div>
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">Address </h2>
+                
+            <div class="formInput">
+                {{ form_label(form.address) }}
+                {{ form_widget(form.address) }}
+            </div>
+            <div class="formInput">
+                {{ form_label(form.address2) }}
+                {{ form_widget(form.address2) }}
+            </div>
+            <div class="formRow">
+                <div class="formCreateNew">
+                    {{ form_label(form.city) }}
+                    {{ form_widget(form.city) }}
+                </div>
+                <div class="formCreateNew">
+                    {{ form_label(form.postalCode) }}
+                    {{ form_widget(form.postalCode) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="formFooter">
+    <button class="btn createProfile">{{ button_label|default('Save') }}</button>
+    </div>
 {{ form_end(form) }}

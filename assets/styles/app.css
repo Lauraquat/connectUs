@@ -125,7 +125,7 @@ body {
     width: 100%;
 }
 
-form {
+.containerRegister form {
     width: 60%;
     margin-top: auto;
     margin-bottom: auto;
@@ -144,7 +144,7 @@ form {
 
 .containerIndex {
     margin: 2rem;
-    color: #3D4E63
+    color: #3D4E63;
 }
 
 .containerCards {
@@ -254,3 +254,55 @@ form {
    height: 50%;
    color: white
 }
+/* new profile page */
+
+.subtitleNewProfile {
+    color: #3D4E63;
+    font-size: 20px;
+}
+
+.containerNewForm {
+    border: 1px solid #3D4E63;
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+.formCreateNew {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5rem;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.formInput {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    margin-bottom: 1rem;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.createProfile {
+    background-color: #3D4E63;
+    color: white;  
+    height: fit-content;
+    margin-top: 2rem;
+    width: 50%;
+}
+
+.formFooter {
+    display: flex;
+    justify-content: center;
+}
+
