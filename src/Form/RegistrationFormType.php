@@ -30,7 +30,7 @@ class RegistrationFormType extends AbstractType
             ->add('name')
             ->add('email')
             ->add('phoneNumber')
-            ->add('agreeTerms', CheckboxType::class, [
+            ->add('agreeTerms', CheckboxType::class, [  //TODO remove it?
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([

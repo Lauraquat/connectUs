@@ -13,6 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    public const CANDIDATE_TYPE = 'Candidat';
+    public const RECRUTER_TYPE = 'Recruteur';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,7 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $phoneNumber = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $type = null;
+    private string $type;
 
     public function getId(): ?int
     {
@@ -192,7 +195,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): string
     {
         return $this->type;
     }
@@ -202,5 +205,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->type = $type;
 
         return $this;
+    }
+
+    public function isCandidate(): bool
+    {
+        return $this->type === self::CANDIDATE_TYPE;
+    }
+
+    public function isRecruter(): bool
+    {
+        return $this->type === self::RECRUTER_TYPE;
+    }
+
+    public function hasProfile(): bool
+    {
+        return $this->isCandidate() && null !== $this->getCandidate()
+            || $this->isRecruter() && null !== $this->getRecruter();
     }
 }

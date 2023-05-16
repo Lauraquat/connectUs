@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Candidate;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Repository\RecruterRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,11 +13,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/candidate')]
-#[IsGranted('ROLE_USER')]
 class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
-    public function index(CandidateRepository $candidateRepository): Response
+    public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository): Response
     {
         return $this->render('candidate/index.html.twig', [
             'candidates' => $candidateRepository->findAll(),
@@ -31,11 +31,10 @@ class CandidateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $candidate->setOwner($this->getUser());
             $candidateRepository->save($candidate, true);
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('candidate/new.html.twig', [
@@ -61,7 +60,7 @@ class CandidateController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $candidateRepository->save($candidate, true);
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('candidate/edit.html.twig', [
@@ -77,6 +76,6 @@ class CandidateController extends AbstractController
             $candidateRepository->remove($candidate, true);
         }
 
-        return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }

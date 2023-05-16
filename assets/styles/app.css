@@ -1,0 +1,230 @@
+html{
+    height: 100%;
+}
+
+body {
+    height: 100% ;
+    width: 100% ;
+}
+
+/* homepage */
+.homepageContainer {
+    width: 100%;
+    height: 100%;
+    color: #3D4E63;
+}
+
+.homeTitle {
+    font-size: 70px;
+    margin-bottom: 2rem;
+}
+
+.homeSubtitle {
+    font-size: 20px;
+    margin-bottom: 1rem;
+}
+
+.homePicture {
+    width: 40%;
+    height: auto;
+    border-radius: 70%;
+    margin-top: 4rem;
+}
+
+.homepageFirstSection {
+    padding: 2rem 3rem 2rem 3rem;
+    display: flex;
+    flex-direction: row;
+    gap: 7rem;
+}
+
+.homepageSecondSection {
+    padding:5rem;
+    background-color: #3D4E63;
+    color: white;
+    height: 100%;   
+}
+
+.homepageSecondSectionSubtitle {
+    font-size: 36px;
+    text-align: center;
+    padding-bottom: 1rem;
+}
+
+.homepageInformation {
+    font-size: 16px;
+    margin: 2rem;
+    text-align: center;
+}
+
+.homepageButton {
+    background-color: #3D4E63;
+    color: white;
+    margin-right: 1rem;
+    margin-top: 1rem;
+}
+
+/* register and login page */
+.containerPageRegister {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+}
+
+.RegisterInformation{
+    font-size: 30px;
+    line-height: 35px;
+}
+
+.registerSubtitle {
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.welcomeRegister {
+    background-color:  #62748D;
+    width: 40%;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 2rem;
+}
+
+.containerRegister {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   background-color: #3D4E63;
+   padding: 2rem;
+   width: 60%;
+   height: 100%;
+   color: white
+}  
+
+.formRegistration{
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;   
+}
+
+.formRegistrationType {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem;
+}
+
+.formRegistrationType input {
+    margin-left: 1rem;
+    margin-right: 0.5rem;
+}
+
+.buttonRegister {
+    background-color: #96ABC6;
+    color: white;
+    width: 100%;
+}
+
+form {
+    width: 60%;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.registerTitle {
+    font-size: 20px;
+}
+
+.connexionTitle {
+    text-align: center;
+    padding-bottom: 2rem;
+}
+
+/* list */
+
+.containerIndex {
+    margin: 2rem;
+    color: #3D4E63
+}
+
+.containerCards {
+    display: flex;
+    flex-direction: row;
+    gap: 4rem;
+}
+
+.profilCard{
+    border: solid 2px #3D4E63;
+    color: #3D4E63;
+    min-width: 17rem;
+    min-height: 20rem;
+    width: max-content;
+    height: max-content;
+    border-radius: 15px;
+    padding: 1rem;
+    margin-bottom: 3rem;
+    
+}
+
+.companyName {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 1rem; 
+    font-weight: 800; 
+}
+
+.indexInformation {
+    line-height: 5px;
+}
+
+.generalInformationIndex {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+.titleInformationIndex {
+    font-size: 12px;
+    font-style: italic;
+    color: #96ABC6
+}
+
+.informationIndex {
+    font-size: 16px;
+    font-weight: 700;  
+}
+
+.contactIndex {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.subcardIndex {
+    background-color: #3D4E63;
+    border-radius: 10px;
+    padding: 1rem;
+    color: white;
+}
+
+.titleIndex {
+    font-size: 40px;
+    font-weight: 800;
+    padding-bottom: 3rem;
+}
+
+.profileButton { 
+    background-color: #3D4E63;
+    color: white;  
+    margin-right: 1rem;
+    height: fit-content;
+}
+
+.titleAndButton {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}

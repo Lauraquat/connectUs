@@ -21,18 +21,14 @@
             </tr>
             <tr>
                 <th>Disponibility</th>
-                <td>{{ candidate.disponibility ? candidate.disponibility|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}</td>
             </tr>
             <tr>
                 <th>Cv</th>
-                <td>{{ candidate.cv }}</td>
+                <td>{{ candidate.cv }}</td> {# TODO a href with CV link in folder #}
             </tr>
         </tbody>
     </table>
 
     <a href="{{ path('app_candidate_index') }}">back to list</a>
-
-    <a href="{{ path('app_candidate_edit', {'id': candidate.id}) }}">edit</a>
-
-    {{ include('candidate/_delete_form.html.twig') }}
 {% endblock %}

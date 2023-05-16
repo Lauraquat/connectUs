@@ -3,18 +3,57 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    <h1>Register</h1>
+    <div class="containerPageRegister">
+        <div class="welcomeRegister">
+        <div>
+        <p class="RegisterInformation">Bonjour et bienvenue sur ConnectUs, </p>
+        <p class="registerSubtitle">Le site web permettant de trouver ton nouveau job ou ton futur employé ! </p>
+        </div>       
+        </div>
+        <div class="containerRegister">
+            <h1 class="registerTitle">Inscription</h1>
 
-    {{ form_start(registrationForm) }}
-    {{ form_row(registrationForm.type) }}
-    {{ form_row(registrationForm.name) }}
-    {{ form_row(registrationForm.email) }}
-    {{ form_row(registrationForm.phoneNumber) }}
-    {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+            {{ form_start(registrationForm) }}
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+                <div class="formRegistrationType">
+            
+                {{ form_label(registrationForm.type) }}
+                {{ form_widget(registrationForm.type) }}
+                </div>
+    
+                <div class="formRegistration">
+                <label>Nom</label>
+                {{ form_widget(registrationForm.name) }}
+                </div>
+                
+                <div class="formRegistration">
+                    {{ form_label(registrationForm.email) }}
+                    {{ form_widget(registrationForm.email) }}
+                </div>
+
+                <div class="formRegistration">
+                    <label >Mot de passe </label>
+                    {{ form_widget(registrationForm.plainPassword) }}
+                </div>
+
+                <div class="formRegistration">
+                    <label>Numéro de téléphone</label>
+                    {{ form_widget(registrationForm.phoneNumber) }}
+                </div>
+            
+                <div >
+                    <label >En cochant, vous acceptez les termes </label>
+                    {{ form_widget(registrationForm.agreeTerms) }}
+                </div>                        
+                    
+                
+                
+
+                <button type="submit" class="btn buttonRegister">S'inscrire</button>
+            
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+    
 {% endblock %}
+
