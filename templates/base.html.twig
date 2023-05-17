@@ -22,16 +22,19 @@
     </head>
     <body>
         {% block header %}
-            <nav>
-              <ul>
+            <div>
+                <a class="btn profileButton" href="{{ path('home') }}">Accueil</a>
                 {% if is_granted('ROLE_USER') %}
-                <li><a href="{{ path('app_logout') }}">logout</a></li>
+                <a class="btn profileButton" href="{{ path('app_logout') }}">Se déconnecter</a>
                 {% else %}
-                <li><a href="{{ path('app_login') }}">login</a></li>
+                <a class="btn profileButton" href="{{ path('app_login') }}">Se connecter</a>
                 {% endif %}
-                <li><a href="{{ path('app_register') }}">login</a></li>
-              </ul>
-            </nav>
+                {% if is_granted('ROLE_CANDIDATE') %}
+                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">voir les recruteurs</a>
+                {% elseif is_granted('ROLE_RECRUTER') %}
+                <a class="btn profileButton" href="{{ path('app_candidate_index') }}">voir les candidats</a>
+                {% endif %}
+            </div>
         {% endblock %}
         {% block body %}{% endblock %}
     </body>
