@@ -23,17 +23,22 @@
     <body>
         {% block header %}
             <div>
-                <a class="btn profileButton" href="{{ path('home') }}">Accueil</a>
-                {% if is_granted('ROLE_USER') %}
-                <a class="btn profileButton" href="{{ path('app_logout') }}">Se déconnecter</a>
-                {% else %}
-                <a class="btn profileButton" href="{{ path('app_login') }}">Se connecter</a>
-                {% endif %}
-                {% if is_granted('ROLE_CANDIDATE') %}
-                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">voir les recruteurs</a>
-                {% elseif is_granted('ROLE_RECRUTER') %}
-                <a class="btn profileButton" href="{{ path('app_candidate_index') }}">voir les candidats</a>
-                {% endif %}
+                <div class="headerContainerPageRegister">
+                    <div class="headerWelcomeRegister">
+                        <a class="btn profileButton" href="{{ path('home') }}">Homepage</a>
+                        {% if is_granted('ROLE_USER') %}
+                        <a class="btn profileButton" href="{{ path('app_logout') }}">Logout</a>
+                        {% else %}
+                        <a class="btn profileButton" href="{{ path('app_login') }}">Login</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_CANDIDATE') %}
+                        <a class="btn profileButton" href="{{ path('app_recruter_index') }}">Show recruters</a>
+                        {% elseif is_granted('ROLE_RECRUTER') %}
+                        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">Show candidates</a>
+                        {% endif %}
+                    </div>
+                    <div class="headerContainerRegister"></div>
+                </div>
             </div>
         {% endblock %}
         {% block body %}{% endblock %}
