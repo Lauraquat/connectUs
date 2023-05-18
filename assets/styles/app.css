@@ -310,6 +310,16 @@ body {
     width: 50%;
 }
 
+.deleteButton {
+    border: 1px solid #3D4E63;
+    margin-right: 1rem;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+}
+
 .formFooter {
     display: flex;
     justify-content: center;
