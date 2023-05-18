@@ -3,9 +3,15 @@
 {% block title %}New Candidate{% endblock %}
 
 {% block body %}
-    <h1>Create new Candidate</h1>
+    <div class="containerIndex">
+        <div class="titleAndButton">
+            <h1 class="titleIndex">Create your profile</h1>
+            <a class="btn profileButton" href="{{ path('app_recruter_index') }}">back to list</a>
+        </div>
+        <h2 class="subtitleNewProfile" >create your profile so that recruters can know you better  </h2>
+            
+    
 
-    {{ include('candidate/_form.html.twig') }}
-
-    <a href="{{ path('app_recruter_index') }}">back to list</a>
+        {{ include('candidate/_form.html.twig') }}
+    </div>
 {% endblock %}
