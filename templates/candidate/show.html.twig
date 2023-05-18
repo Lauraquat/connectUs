@@ -1,60 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Candidate{% endblock %}
+    {% block title %}Candidate{% endblock %}
 
-{% block body %}
+    {% block body %}
 
-    <div class="containerIndex">
-        <div class="titleAndButton">
-            <h1 class="titleIndex">{{app.user.getName()}}</h1>
-            <a class="btn profileButton" href="{{ path('app_candidate_index') }}">back to list</a>
-        </div>
-        <div class="containerCardShow">
-            <div class="containerNewForm">
-                <h2 class="subtitleNewProfile">General informations </h2>
-                <div class="informationRow">
-                    <div>
-                        <p class="titleInformationShow">Searched post <p/>
-                        {{candidate.searchedPost}}
-                    </div>
-                    <div>
-                        <p class="titleInformationShow">Disponibility <p/>
-                        {{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}
-                    </div>
-                    <div>
-                        <p class="titleInformationShow">City <p/>
-                        {{ candidate.city}}
-                    </div>
+<div class="containerIndex">
+    <div class="titleAndButton">
+        <h1 class="titleIndex">{{app.user.getName()}}</h1>
+        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">back to list</a>
+    </div>
+    <div class="containerCardShow">
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">General informations </h2>
+            <div class="informationRow">
+                <div>
+                    <p class="titleInformationShow">Searched post </p>
+                    {{candidate.searchedPost}}
+                </div>
+                <div>
+                    <p class="titleInformationShow">Disponibility </p>
+                    {{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}
+                </div>
+                <div>
+                    <p class="titleInformationShow">City </p>
+                    {{ candidate.city}}
                 </div>
             </div>
+        </div>
         <div class="containerNewForm">
             <h2 class="subtitleNewProfile">Contacts </h2>
             <div class="informationRow">
                 <div>
-                    <p class="titleInformationShow">Email <p/>
+                    <p class="titleInformationShow">Email </p>
                     {{app.user.email}}
                 </div>
                 <div>
-                    <p class="titleInformationShow">Phone number <p/>
+                    <p class="titleInformationShow">Phone number </p>
                     {{ app.user.phoneNumber }}
                 </div>
-               
-            </div>           
+
+            </div>
         </div>
         <div class="containerNewForm">
             <h2 class="subtitleNewProfile">Curriculum vitae </h2>
             <div class="informationRow">
                 <div class="showCV">
-                    {{candidate.cv}}  {# TODO a href with CV link in folder #}
-
+                    <a href="{{ asset('uploads/CV/' ~ candidate.CV) }}">View CV </a>
                 </div>
-               
-               
-            </div>           
+            </div>
         </div>
     </div>
-
-         
-    
-
 {% endblock %}

@@ -6,13 +6,16 @@ use App\Entity\Candidate;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
 use App\Repository\RecruterRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 #[Route('/candidate')]
 class CandidateController extends AbstractController
@@ -26,7 +29,7 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/new', name: 'app_candidate_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CandidateRepository $candidateRepository): Response
+    public function new(Request $request, CandidateRepository $candidateRepository, SluggerInterface $slugger): Response
     {
         $candidate = new Candidate();
         $form = $this->createForm(CandidateType::class, $candidate);
@@ -34,6 +37,26 @@ class CandidateController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $candidate->setOwner($this->getUser());
+
+            /** @var UploadedFile $CV */
+            $CV = $form->get('CV')->getData();
+
+            if ($CV) {
+                $originalFilename = pathinfo($CV->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$CV->guessExtension();
+
+                try {
+                    $CV->move(
+                        $this->getParameter('CV_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    throw new DomainException("Error during CV import");
+                }
+                $candidate->setCV($newFilename);
+            }
+
             $candidateRepository->save($candidate, true);
 
             return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
