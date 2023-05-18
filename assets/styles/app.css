@@ -267,6 +267,7 @@ body {
     padding: 2rem;
     margin-top: 2rem;
     width: 100%;
+    background-color: white;
 }
 
 .formCreateNew {
@@ -325,3 +326,32 @@ body {
     justify-content: center;
 }
 
+/* show profile */
+
+.informationRow {
+    display: flex;
+    flex-direction: row;
+    gap: 10rem;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.titleInformationShow {
+    font-size: 14px;
+    font-style: italic;
+    color: #96ABC6;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+}
+
+.showCV {
+    margin: auto;
+}
+
+.containerCardShow {
+    margin: 1rem;
+    background-color: #3D4E63;
+    border-radius: 15px;
+    padding: 2rem;
+}
