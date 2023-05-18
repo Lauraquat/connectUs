@@ -26,8 +26,9 @@ class Candidate
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $disponibility = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cv = null;
+    #[ORM\Column(type: 'string')]
+    private ?string $CV = null;
+
 
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -82,14 +83,14 @@ class Candidate
         return $this;
     }
 
-    public function getCv(): ?string
+    public function getCV(): string
     {
-        return $this->cv;
+        return $this->CV;
     }
 
-    public function setCv(string $cv): self
+    public function setCV(string $CV): self
     {
-        $this->cv = $cv;
+        $this->CV = $CV;
 
         return $this;
     }
