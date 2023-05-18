@@ -293,6 +293,15 @@ body {
     font-weight: bold;
 }
 
+.cityInput {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-bottom: 1rem;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .createProfile {
     background-color: #3D4E63;
     color: white;  

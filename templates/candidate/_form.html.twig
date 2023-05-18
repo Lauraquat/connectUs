@@ -1,4 +1,29 @@
 {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+    <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">General informations </h2>
+             <div class="cityInput">
+                    {{ form_label(form.city) }}
+                    {{ form_widget(form.city) }}
+                </div>
+            <div class="formRow">
+                <div class="formCreateNew">
+                    {{ form_label(form.searchedPost) }}
+                    {{ form_widget(form.searchedPost) }}
+                </div>
+                <div class="formCreateNew">
+                    {{ form_label(form.disponibility) }}
+                    {{ form_widget(form.disponibility) }}
+                </div>
+            </div>
+            <div class="cityInput">
+                {{ form_label(form.cv) }}
+                {{ form_widget(form.cv) }}
+            </div>
+        </div>
+    
+
+     <div class="formFooter">
+    <button class="btn createProfile">{{ button_label|default('Save') }}</button>
+    </div>
+   
 {{ form_end(form) }}
