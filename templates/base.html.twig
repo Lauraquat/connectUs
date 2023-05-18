@@ -21,9 +21,26 @@
         {% endblock %}
     </head>
     <body>
-        
-            {% block body %}{% endblock %}
-
-        
+        {% block header %}
+            <div>
+                <div class="headerContainerPageRegister">
+                    <div class="headerWelcomeRegister">
+                        <a class="btn profileButton" href="{{ path('home') }}">Homepage</a>
+                        {% if is_granted('ROLE_USER') %}
+                        <a class="btn profileButton" href="{{ path('app_logout') }}">Logout</a>
+                        {% else %}
+                        <a class="btn profileButton" href="{{ path('app_login') }}">Login</a>
+                        {% endif %}
+                        {% if is_granted('ROLE_CANDIDATE') %}
+                        <a class="btn profileButton" href="{{ path('app_recruter_index') }}">Show recruters</a>
+                        {% elseif is_granted('ROLE_RECRUTER') %}
+                        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">Show candidates</a>
+                        {% endif %}
+                    </div>
+                    <div class="headerContainerRegister"></div>
+                </div>
+            </div>
+        {% endblock %}
+        {% block body %}{% endblock %}
     </body>
 </html>

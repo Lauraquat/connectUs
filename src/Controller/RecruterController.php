@@ -82,6 +82,6 @@ class RecruterController extends AbstractController
             $recruterRepository->remove($recruter, true);
         }
 
-        return $this->redirectToRoute('app_register', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
