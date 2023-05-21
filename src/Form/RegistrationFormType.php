@@ -20,8 +20,8 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('type', ChoiceType::class, [
                 'choices'  => [
-                    'Recruteur' => 'Recruteur',
-                    'Candidat' => 'Candidat',
+                    'Recruter' => 'Recruter',
+                    'Candidate' => 'Candidate',
                 ],
                 'expanded' => true,
                 'multiple' => false,

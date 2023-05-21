@@ -1,51 +1,51 @@
 {% extends 'base.html.twig' %}
 
-    {% block title %}Candidate{% endblock %}
+    {% block title %}{% trans %}Candidate{% endtrans %}{% endblock %}
 
     {% block body %}
 
 <div class="containerIndex">
     <div class="titleAndButton">
         <h1 class="titleIndex">{{app.user.getName()}}</h1>
-        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">back to list</a>
+        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">{% trans %}Back to list{% endtrans %}</a>
     </div>
     <div class="containerCardShow">
         <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">General informations </h2>
+            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
             <div class="informationRow">
                 <div>
-                    <p class="titleInformationShow">Searched post </p>
+                    <p class="titleInformationShow">{% trans %}Searched post{% endtrans %}</p>
                     {{candidate.searchedPost}}
                 </div>
                 <div>
-                    <p class="titleInformationShow">Disponibility </p>
+                    <p class="titleInformationShow">{% trans %}Disponibility{% endtrans %}</p>
                     {{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}
                 </div>
                 <div>
-                    <p class="titleInformationShow">City </p>
+                    <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
                     {{ candidate.city}}
                 </div>
             </div>
         </div>
         <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">Contacts </h2>
+            <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
             <div class="informationRow">
                 <div>
-                    <p class="titleInformationShow">Email </p>
+                    <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
                     {{app.user.email}}
                 </div>
                 <div>
-                    <p class="titleInformationShow">Phone number </p>
+                    <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
                     {{ app.user.phoneNumber }}
                 </div>
 
             </div>
         </div>
         <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">Curriculum vitae </h2>
+            <h2 class="subtitleNewProfile">{% trans %}Curriculum vitae{% endtrans %}</h2>
             <div class="informationRow">
                 <div class="showCV">
-                    <a href="{{ asset('uploads/CV/' ~ candidate.CV) }}">View CV </a>
+                    <a href="{{ asset('uploads/CV/' ~ candidate.CV) }}">{% trans %}View CV{% endtrans %}</a>
                 </div>
             </div>
         </div>

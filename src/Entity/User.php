@@ -13,8 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    public const CANDIDATE_TYPE = 'Candidat';
-    public const RECRUTER_TYPE = 'Recruteur';
+    public const CANDIDATE_TYPE = 'Candidate';
+    public const RECRUTER_TYPE = 'Recruter';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

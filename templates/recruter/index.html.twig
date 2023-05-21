@@ -1,16 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recruter index{% endblock %}
+{% block title %}{% trans %}Recruters list{% endtrans %}{% endblock %}
 
 {% block body %}
     <div class="containerIndex">
         <div class="titleAndButton">
-        <h1 class="titleIndex">Discover our recruiters</h1>
+        <h1 class="titleIndex">{% trans %}Discover our recruiters{% endtrans %}</h1>
 
         {% if not app.user.hasProfile() %}
             <a class="btn profileButton" href="{{ path('app_candidate_new') }}">Créer mon profil</a>
         {% else %}
-            <a class="btn profileButton" href="{{ path('app_candidate_edit', {'id': app.user.candidate.id}) }}">Modifier mon profil</a>
+            <a class="btn profileButton" href="{{ path('app_candidate_edit', {'id': app.user.candidate.id}) }}">{% trans %}Edit my profile{% endtrans %}</a>
         {% endif %}
         </div>
         <div class="containerCards">
@@ -46,18 +46,16 @@
                                     {{app.user.getPhoneNumber()}} 
                                 </p>
                             </div>
-                            <a class="btn buttonRegister" href="{{ path('app_recruter_show', {'id': recruter.id}) }}">See profile</a>
+                            <a class="btn buttonRegister" href="{{ path('app_recruter_show', {'id': recruter.id}) }}">{% trans %}See profile{% endtrans %}</a>
                         </div>
                 </div>
             {% else %}
                     <tr>
-                        <td colspan="8">no records found</td>
+                        <td colspan="8">{% trans %}No recruters found{% endtrans %}</td>
                     </tr>
             {% endfor %}
 
         </div>
     </div>
-   
-        
-    <a href="{{ path('app_recruter_new') }}">Create new</a>
+
 {% endblock %}

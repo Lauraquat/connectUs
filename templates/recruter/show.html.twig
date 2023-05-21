@@ -1,61 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Recruter{% endblock %}
+{% block title %}{% trans %}Recruter{% trans %}{% endblock %}
 
 {% block body %}
 
     <div class="containerIndex">
             <div class="titleAndButton">
                 <h1 class="titleIndex">{{app.user.getName()}}</h1>
-                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">back to list</a>
+                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
             </div>
             <div class="containerCardShow">
                 <div class="containerNewForm">
-                    <h2 class="subtitleNewProfile">General informations </h2>
+                    <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
                     <div class="informationRow">
                         <div>
-                            <p class="titleInformationShow">Company name </p>
+                            <p class="titleInformationShow">{% trans %}Company name{% endtrans %}</p>
                             {{recruter.companyName}}
                         </div>
                         <div>
-                            <p class="titleInformationShow">Domain </p>
+                            <p class="titleInformationShow">{% trans %}Domain{% endtrans %}</p>
                             {{ recruter.domain}}
                         </div>
                     </div>
                 </div>
                 <div class="containerNewForm">
-                    <h2 class="subtitleNewProfile">Address </h2>
+                    <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
                     <div class="informationRow">
                         <div>
-                            <p class="titleInformationShow">Address </p>
+                            <p class="titleInformationShow">{% trans %}Address{% endtrans %}</p>
                             {{recruter.address}}
                         </div>
                         <div>
-                            <p class="titleInformationShow">Address Complement </p>
+                            <p class="titleInformationShow">{% trans %}Address Complement{% endtrans %}</p>
                             {{ recruter.address2}}
                         </div>
                     </div>
                     <div class="informationRow">
                         <div>
-                            <p class="titleInformationShow">City </p>
-                            {{recruter.city}}
+                            <p class="titleInformationShow">{% trans %}Postal code{% endtrans %}</p>
+                            {{ recruter.postalCode}}
                         </div>
                         <div>
-                            <p class="titleInformationShow">Postal code</p>
-                            {{ recruter.postalCode}}
+                            <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
+                            {{recruter.city}}
                         </div>
                     </div>
                     
                 </div>
                     <div class="containerNewForm">
-                        <h2 class="subtitleNewProfile">Contacts </h2>
+                        <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
                         <div class="informationRow">
                             <div>
-                                <p class="titleInformationShow">Email </p>
+                                <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
                                 {{app.user.email}}
                             </div>
                             <div>
-                                <p class="titleInformationShow">Phone number </p>
+                                <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
                                 {{ app.user.phoneNumber }}
                             </div>
                         

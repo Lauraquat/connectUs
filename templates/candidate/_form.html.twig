@@ -1,9 +1,9 @@
 {{ form_start(form) }}
     <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">General informations </h2>
+            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
              <div class="cityInput">
                     {{ form_label(form.city) }}
-                    {{ form_widget(form.city) }}
+                    {{ form_widget(form.city)}}
                 </div>
             <div class="formRow">
                 <div class="formCreateNew">
@@ -23,7 +23,7 @@
     
 
      <div class="formFooter">
-    <button class="btn createProfile">{{ button_label|default('Save') }}</button>
+    <button class="btn createProfile">{{ button_label|default('Save') | trans }}</button>
     </div>
    
 {{ form_end(form) }}

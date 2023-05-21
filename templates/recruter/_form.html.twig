@@ -2,20 +2,20 @@
     
     <div class="containerCardNew">
         <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">General informations </h2>
+            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
             <div class="formRow">
-                <div class="formCreateNew">
-                    {{ form_label(form.domain) }}
-                    {{ form_widget(form.domain) }}
-                </div>
                 <div class="formCreateNew">
                     {{ form_label(form.companyName) }}
                     {{ form_widget(form.companyName) }}
                 </div>
+                <div class="formCreateNew">
+                    {{ form_label(form.domain) }}
+                    {{ form_widget(form.domain) }}
+                </div>
             </div>
         </div>
         <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">Address </h2>
+            <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
                 
             <div class="formInput">
                 {{ form_label(form.address) }}
@@ -27,12 +27,12 @@
             </div>
             <div class="formRow">
                 <div class="formCreateNew">
-                    {{ form_label(form.city) }}
-                    {{ form_widget(form.city) }}
-                </div>
-                <div class="formCreateNew">
                     {{ form_label(form.postalCode) }}
                     {{ form_widget(form.postalCode) }}
+                </div>
+                <div class="formCreateNew">
+                    {{ form_label(form.city) }}
+                    {{ form_widget(form.city) }}
                 </div>
             </div>
         </div>

@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Candidate;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
-use App\Repository\RecruterRepository;
 use DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -16,12 +15,13 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/candidate')]
 class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
-    public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository): Response
+    public function index(CandidateRepository $candidateRepository): Response
     {
         return $this->render('candidate/index.html.twig', [
             'candidates' => $candidateRepository->findAll(),
@@ -29,7 +29,7 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/new', name: 'app_candidate_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, CandidateRepository $candidateRepository, SluggerInterface $slugger): Response
+    public function new(Request $request, CandidateRepository $candidateRepository, SluggerInterface $slugger, TranslatorInterface $translator): Response
     {
         $candidate = new Candidate();
         $form = $this->createForm(CandidateType::class, $candidate);
@@ -52,7 +52,7 @@ class CandidateController extends AbstractController
                         $newFilename
                     );
                 } catch (FileException $e) {
-                    throw new DomainException("Error during CV import");
+                    throw new DomainException($translator->trans("Error during CV import"));
                 }
                 $candidate->setCV($newFilename);
             }

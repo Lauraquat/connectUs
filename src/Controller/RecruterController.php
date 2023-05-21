@@ -6,7 +6,6 @@ use App\Entity\Recruter;
 use App\Entity\User;
 use App\Form\RecruterType;
 use App\Repository\RecruterRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,7 +80,6 @@ class RecruterController extends AbstractController
             $session->invalidate();
             $recruterRepository->remove($recruter, true);
         }
-
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 }
