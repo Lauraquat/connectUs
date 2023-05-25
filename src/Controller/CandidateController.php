@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Candidate;
+use App\Entity\Like;
 use App\Form\CandidateType;
 use App\Repository\CandidateRepository;
+use App\Repository\LikeRepository;
+use App\Repository\RecruterRepository;
 use DomainException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -105,4 +108,49 @@ class CandidateController extends AbstractController
 
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route('/{candidateID}/{recruterID}', name: 'app_candidate_like', methods: ['GET'])]
+    public function likeCandidate(Request $request,LikeRepository $likeRepository,CandidateRepository $candidateRepository,RecruterRepository $recruterRepository): Response
+    {
+        $candidateId = $request->get('candidateID');
+        $recruterId = $request->get('recruterID');
+
+        
+        $candidate = $candidateRepository->find(intval($candidateId));
+        $recruter = $recruterRepository->findOneBy(['owner' => $recruterId]);
+        //$likeRepository->save($likeRepository,true);
+        
+
+        // Vérifier si les instances sont valides
+        if (!$candidate ) {
+            return new Response('Candidat introuvable.', Response::HTTP_NOT_FOUND);
+        }elseif(!$recruter){
+            return new Response('Recruteur introuvable.', Response::HTTP_NOT_FOUND);
+        }
+
+        $like = new Like();
+        $like->setCandidate($candidate);
+        $like->setRecruter($recruter);
+        $like->setDate(new \DateTime());
+
+        $likeRepository->save($like, true);
+        //return new Response('Like enregistré avec succès !');
+        
+        return $this->redirectToRoute('app_candidate_show', ['id' => $candidateId], Response::HTTP_SEE_OTHER);
+    }
+    /*
+    #[Route('/candidate-like', name: 'app_candidate_like', methods: ['GET'])]
+    public function showCandidateLike(CandidateRepository $candidateRepository): Response
+    {
+
+        $likes = $candidateRepository->myFunctionInRepositoryForShow()
+
+        return $this->render('candidate/index.html.twig', [
+            'likes' => $likes,
+        ]);
+
+        créer un nouveau twig similaire au index.candidate.twig.
+        mettre une securité si likes is empty
+    }
+    */
 }

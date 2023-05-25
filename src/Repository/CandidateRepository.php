@@ -39,6 +39,13 @@ class CandidateRepository extends ServiceEntityRepository
         }
     }
 
+    //public fonction
+    /* 
+    select recruteurID from like where candidate_id = ?, []
+    */
+
+    
+
 //    /**
 //     * @return Candidate[] Returns an array of Candidate objects
 //     */
