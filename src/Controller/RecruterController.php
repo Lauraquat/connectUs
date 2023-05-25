@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Recruter;
 use App\Entity\User;
+use App\Entity\Like;
 use App\Form\RecruterType;
+use App\Repository\CandidateRepository;
+use App\Repository\LikeRepository;
 use App\Repository\RecruterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -81,5 +84,35 @@ class RecruterController extends AbstractController
             $recruterRepository->remove($recruter, true);
         }
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{recruterID}/{candidateID}', name: 'app_recruter_like', methods: ['GET'])]
+    public function likeCandidate(Request $request,LikeRepository $likeRepository,CandidateRepository $candidateRepository,RecruterRepository $recruterRepository): Response
+    {
+        $candidateId = $request->get('candidateID');
+        $recruterId = $request->get('recruterID');
+
+        
+        $candidate = $candidateRepository->findOneBy(['owner' => $candidateId]);
+        $recruter = $recruterRepository->find($recruterId);
+        //$likeRepository->save($likeRepository,true);
+        
+
+        // Vérifier si les instances sont valides
+        if (!$candidate ) {
+            return new Response('Candidat introuvable.', Response::HTTP_NOT_FOUND);
+        }elseif(!$recruter){
+            return new Response('Recruteur introuvable.', Response::HTTP_NOT_FOUND);
+        }
+
+        $like = new Like();
+        $like->setCandidate($candidate);
+        $like->setRecruter($recruter);
+        $like->setDate(new \DateTime());
+
+        $likeRepository->save($like, true);
+        //return new Response('Like enregistré avec succès !');
+        
+        return $this->redirectToRoute('app_recruter_show', ['id' => $recruterId], Response::HTTP_SEE_OTHER);
     }
 }
