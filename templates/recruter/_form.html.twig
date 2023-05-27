@@ -1,43 +1,47 @@
 {{ form_start(form) }}
-    
-    <div class="containerCardNew">
-        <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
-            <div class="formRow">
-                <div class="formCreateNew">
-                    {{ form_label(form.companyName) }}
-                    {{ form_widget(form.companyName) }}
-                </div>
-                <div class="formCreateNew">
-                    {{ form_label(form.domain) }}
-                    {{ form_widget(form.domain) }}
-                </div>
+<div class="containerCardNew">
+    <div class="containerNewForm">
+        <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
+        <div class="formRow">
+            <div class="formCreateNew">
+                {{ form_label(form.companyName) }}
+                {{ form_widget(form.companyName) }}
+                {{ form_errors(form.companyName) }}
+            </div>
+            <div class="formCreateNew">
+                {{ form_label(form.domain) }}
+                {{ form_widget(form.domain) }}
+                {{ form_errors(form.domain) }}
             </div>
         </div>
-        <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
-                
-            <div class="formInput">
-                {{ form_label(form.address) }}
-                {{ form_widget(form.address) }}
-            </div>
+    </div>
+    <div class="containerNewForm">
+        <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
+        <div class="formInput">
+            {{ form_label(form.address) }}
+            {{ form_widget(form.address) }}
+            {{ form_errors(form.address) }}
+        </div>
             <div class="formInput">
                 {{ form_label(form.address2) }}
                 {{ form_widget(form.address2) }}
+                {{ form_errors(form.address2) }}
             </div>
-            <div class="formRow">
-                <div class="formCreateNew">
-                    {{ form_label(form.postalCode) }}
-                    {{ form_widget(form.postalCode) }}
-                </div>
-                <div class="formCreateNew">
-                    {{ form_label(form.city) }}
-                    {{ form_widget(form.city) }}
-                </div>
+        <div class="formRow">
+            <div class="formCreateNew">
+                {{ form_label(form.postalCode) }}
+                {{ form_widget(form.postalCode) }}
+                {{ form_errors(form.postalCode) }}
+            </div>
+            <div class="formCreateNew">
+                {{ form_label(form.city) }}
+                {{ form_widget(form.city) }}
+                {{ form_errors(form.city) }}
             </div>
         </div>
     </div>
-    <div class="formFooter">
+</div>
+<div class="formFooter">
     <button class="btn createProfile">{{ button_label|default('Save' | trans) }}</button>
-    </div>
+</div>
 {{ form_end(form) }}

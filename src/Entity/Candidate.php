@@ -20,10 +20,13 @@ class Candidate
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
+    #[ORM\Column]
+    private ?int $postalCode = null;
+
     #[ORM\Column(length: 255)]
     private ?string $searchedPost = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?DateTimeInterface $disponibility = null;
 
     #[ORM\Column(type: 'string')]
@@ -55,6 +58,18 @@ class Candidate
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(int $postalCode): self
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }
