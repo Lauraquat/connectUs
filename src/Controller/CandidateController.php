@@ -138,19 +138,16 @@ class CandidateController extends AbstractController
         
         return $this->redirectToRoute('app_candidate_show', ['id' => $candidateId], Response::HTTP_SEE_OTHER);
     }
-    /*
+    
     #[Route('/candidate-like', name: 'app_candidate_like', methods: ['GET'])]
     public function showCandidateLike(CandidateRepository $candidateRepository): Response
     {
+        
+        $likes = $candidateRepository->likeCandidate();
 
-        $likes = $candidateRepository->myFunctionInRepositoryForShow()
-
-        return $this->render('candidate/index.html.twig', [
+        return $this->render('candidate/candidate.html.twig', [
             'likes' => $likes,
         ]);
-
-        créer un nouveau twig similaire au index.candidate.twig.
-        mettre une securité si likes is empty
     }
-    */
+    
 }
