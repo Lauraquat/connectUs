@@ -24,10 +24,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class CandidateController extends AbstractController
 {
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
-    public function index(CandidateRepository $candidateRepository): Response
+    public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository, LikeRepository $likeRepository ): Response
     {
+        $recruter = $recruterRepository->find($this->getUser());
+
         return $this->render('candidate/index.html.twig', [
             'candidates' => $candidateRepository->findAll(),
+            'likeCandidates' => $likeRepository->findByRecruter($recruter),
         ]);
     }
 
@@ -38,37 +41,37 @@ class CandidateController extends AbstractController
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $candidate->setOwner($this->getUser());
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $candidate->setOwner($this->getUser());
 
-            /** @var UploadedFile $CV */
-            $CV = $form->get('CV')->getData();
+                /** @var UploadedFile $CV */
+                $CV = $form->get('CV')->getData();
 
-            if ($CV) {
-                $originalFilename = pathinfo($CV->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$CV->guessExtension();
+                if ($CV) {
+                    $originalFilename = pathinfo($CV->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $CV->guessExtension();
 
-                try {
-                    $CV->move(
-                        $this->getParameter('CV_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    throw new DomainException($translator->trans("Error during CV import"));
+                    try {
+                        $CV->move(
+                            $this->getParameter('CV_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        throw new DomainException($translator->trans("Error during CV import"));
+                    }
+                    $candidate->setCV($newFilename);
                 }
-                $candidate->setCV($newFilename);
+
+                $candidateRepository->save($candidate, true);
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
+
+                return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
             }
-
-            $candidateRepository->save($candidate, true);
-
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
-
-            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
-
-        }else {
-            $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
         }
 
         return $this->renderForm('candidate/new.html.twig', [
@@ -78,10 +81,13 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_candidate_show', methods: ['GET'])]
-    public function show(Candidate $candidate): Response
+    public function show(Candidate $candidate, RecruterRepository $recruterRepository): Response
     {
+        $recruter = $recruterRepository->find($this->getUser()->getId());
+
         return $this->render('candidate/show.html.twig', [
             'candidate' => $candidate,
+            'recruter' => $recruter,
         ]);
     }
 
@@ -89,16 +95,18 @@ class CandidateController extends AbstractController
     public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, TranslatorInterface $translator): Response {
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
-dump('controller_od');
-        if ($form->isSubmitted() && $form->isValid()) {
-            $candidateRepository->save($candidate, true);
 
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $candidateRepository->save($candidate, true);
 
-            return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
-        }else{
-            $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
+
+                return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+            }else{
+                $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+            }
         }
 
         return $this->renderForm('candidate/edit.html.twig', [
@@ -125,45 +133,17 @@ dump('controller_od');
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{candidateID}/{recruterID}', name: 'app_candidate_like', methods: ['GET'])]
-    public function likeCandidate(Request $request,LikeRepository $likeRepository,CandidateRepository $candidateRepository,RecruterRepository $recruterRepository): Response
+    #[Route('/like/{id}', name: 'app_candidate_like', methods: ['GET'])]
+    public function likeCandidate(Request $request, Candidate $candidate, LikeRepository $likeRepository, RecruterRepository $recruterRepository): Response
     {
-        $candidateId = $request->get('candidateID');
-        $recruterId = $request->get('recruterID');
-
-        
-        $candidate = $candidateRepository->find(intval($candidateId));
-        $recruter = $recruterRepository->findOneBy(['owner' => $recruterId]);
-        //$likeRepository->save($likeRepository,true);
-        
-
-        // Vérifier si les instances sont valides
-        if (!$candidate ) {
-            return new Response('Candidat introuvable.', Response::HTTP_NOT_FOUND);
-        }elseif(!$recruter){
-            return new Response('Recruteur introuvable.', Response::HTTP_NOT_FOUND);
-        }
+        $recruter = $recruterRepository->find($this->getUser()->getId());
 
         $like = new Like();
         $like->setCandidate($candidate);
         $like->setRecruter($recruter);
-        $like->setDate(new \DateTime());
 
         $likeRepository->save($like, true);
-        //return new Response('Like enregistré avec succès !');
-        
-        return $this->redirectToRoute('app_candidate_show', ['id' => $candidateId], Response::HTTP_SEE_OTHER);
-    }
-    
-    #[Route('/candidate-like', name: 'app_candidate_like', methods: ['GET'])]
-    public function showCandidateLike(CandidateRepository $candidateRepository): Response
-    {
-        
-        $likes = $candidateRepository->likeCandidate();
 
-        return $this->render('candidate/candidate.html.twig', [
-            'likes' => $likes,
-        ]);
+        return $this->redirectToRoute('app_candidate_show', ['id' => $candidate->getId()], Response::HTTP_SEE_OTHER);
     }
-    
 }

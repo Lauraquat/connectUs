@@ -98,12 +98,12 @@ class Candidate
         return $this;
     }
 
-    public function getCV(): string
+    public function getCV(): ?string
     {
         return $this->CV;
     }
 
-    public function setCV(string $CV): self
+    public function setCV(?string $CV): self
     {
         $this->CV = $CV;
 
@@ -122,33 +122,15 @@ class Candidate
         return $this;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
+    public function isRecruterLiked(Recruter $recruter): bool
     {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setCandidate($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getCandidate() === $this) {
-                $like->setCandidate(null);
+        foreach ($this->likes as $like) {
+            if ($like->getRecruter() === $recruter) {
+                return true;
             }
         }
 
-        return $this;
+        return false;
     }
+
 }

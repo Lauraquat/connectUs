@@ -21,10 +21,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RecruterController extends AbstractController
 {
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
-    public function index(RecruterRepository $recruterRepository): Response
+    public function index(RecruterRepository $recruterRepository, CandidateRepository $candidateRepository, LikeRepository $likeRepository): Response
     {
+        $candidate = $candidateRepository->find($this->getUser());
+
         return $this->render('recruter/index.html.twig', [
             'recruters' => $recruterRepository->findAll(),
+            'likeRecruters' => $likeRepository->findByCandidate($candidate),
         ]);
     }
 
@@ -37,16 +40,18 @@ class RecruterController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recruter->setOwner($user);
-            $recruterRepository->save($recruter, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recruter->setOwner($user);
+                $recruterRepository->save($recruter, true);
 
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
-        }else {
-            $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
+                return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
+            }
         }
 
         return $this->renderForm('recruter/new.html.twig', [
@@ -56,10 +61,13 @@ class RecruterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recruter_show', methods: ['GET'])]
-    public function show(Recruter $recruter): Response
+    public function show(Recruter $recruter, CandidateRepository $candidateRepository): Response
     {
+       $candidate = $candidateRepository->find($this->getUser()->getId());
+
         return $this->render('recruter/show.html.twig', [
             'recruter' => $recruter,
+            'candidate' => $candidate,
         ]);
     }
 
@@ -69,15 +77,17 @@ class RecruterController extends AbstractController
         $form = $this->createForm(RecruterType::class, $recruter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recruterRepository->save($recruter, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recruterRepository->save($recruter, true);
 
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
-        }else{
-            $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+                return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+            }
         }
 
         return $this->renderForm('recruter/edit.html.twig', [
@@ -103,32 +113,17 @@ class RecruterController extends AbstractController
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/{recruterID}/{candidateID}', name: 'app_recruter_like', methods: ['GET'])]
-    public function likeCandidate(Request $request,LikeRepository $likeRepository,CandidateRepository $candidateRepository,RecruterRepository $recruterRepository): Response
+    #[Route('/like/{id}', name: 'app_recruter_like', methods: ['GET'])]
+    public function likeRecruter(Request $request, Recruter $recruter, LikeRepository $likeRepository, CandidateRepository $candidateRepository): Response
     {
-        $candidateId = $request->get('candidateID');
-        $recruterId = $request->get('recruterID');
-
-        
-        $candidate = $candidateRepository->findOneBy(['owner' => $candidateId]);
-        $recruter = $recruterRepository->find($recruterId);
-        
-
-        // Vérifier si les instances sont valides
-        if (!$candidate ) {
-            return new Response('Candidat introuvable.', Response::HTTP_NOT_FOUND);
-        }elseif(!$recruter){
-            return new Response('Recruteur introuvable.', Response::HTTP_NOT_FOUND);
-        }
+        $candidate = $candidateRepository->find($this->getUser()->getId());
 
         $like = new Like();
-        $like->setCandidate($candidate);
         $like->setRecruter($recruter);
-        $like->setDate(new \DateTime());
+        $like->setCandidate($candidate);
 
         $likeRepository->save($like, true);
-        //return new Response('Like enregistré avec succès !');
-        
-        return $this->redirectToRoute('app_recruter_show', ['id' => $recruterId], Response::HTTP_SEE_OTHER);
+
+        return $this->redirectToRoute('app_recruter_show', ['id' => $recruter->getId()], Response::HTTP_SEE_OTHER);
     }
 }
