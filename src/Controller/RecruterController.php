@@ -4,7 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Recruter;
 use App\Entity\User;
+use App\Entity\Like;
 use App\Form\RecruterType;
+use App\Repository\CandidateRepository;
+use App\Repository\LikeRepository;
 use App\Repository\RecruterRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,10 +21,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RecruterController extends AbstractController
 {
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
-    public function index(RecruterRepository $recruterRepository): Response
+    public function index(RecruterRepository $recruterRepository, CandidateRepository $candidateRepository, LikeRepository $likeRepository): Response
     {
+        $candidate = $candidateRepository->find($this->getUser());
+
         return $this->render('recruter/index.html.twig', [
             'recruters' => $recruterRepository->findAll(),
+            'likeRecruters' => $likeRepository->findByCandidate($candidate),
         ]);
     }
 
@@ -34,16 +40,18 @@ class RecruterController extends AbstractController
 
         /** @var User $user */
         $user = $this->getUser();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recruter->setOwner($user);
-            $recruterRepository->save($recruter, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recruter->setOwner($user);
+                $recruterRepository->save($recruter, true);
 
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
-        }else {
-            $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
+                return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
+            }
         }
 
         return $this->renderForm('recruter/new.html.twig', [
@@ -53,10 +61,13 @@ class RecruterController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_recruter_show', methods: ['GET'])]
-    public function show(Recruter $recruter): Response
+    public function show(Recruter $recruter, CandidateRepository $candidateRepository): Response
     {
+       $candidate = $candidateRepository->find($this->getUser()->getId());
+
         return $this->render('recruter/show.html.twig', [
             'recruter' => $recruter,
+            'candidate' => $candidate,
         ]);
     }
 
@@ -66,15 +77,17 @@ class RecruterController extends AbstractController
         $form = $this->createForm(RecruterType::class, $recruter);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $recruterRepository->save($recruter, true);
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $recruterRepository->save($recruter, true);
 
-            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
-            $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
+                // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+                $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
 
-            return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
-        }else{
-            $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+                return $this->redirectToRoute('app_candidate_index', [], Response::HTTP_SEE_OTHER);
+            } else {
+                $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
+            }
         }
 
         return $this->renderForm('recruter/edit.html.twig', [
@@ -98,5 +111,19 @@ class RecruterController extends AbstractController
         }
 
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/like/{id}', name: 'app_recruter_like', methods: ['GET'])]
+    public function likeRecruter(Request $request, Recruter $recruter, LikeRepository $likeRepository, CandidateRepository $candidateRepository): Response
+    {
+        $candidate = $candidateRepository->find($this->getUser()->getId());
+
+        $like = new Like();
+        $like->setRecruter($recruter);
+        $like->setCandidate($candidate);
+
+        $likeRepository->save($like, true);
+
+        return $this->redirectToRoute('app_recruter_show', ['id' => $recruter->getId()], Response::HTTP_SEE_OTHER);
     }
 }

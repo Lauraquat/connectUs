@@ -29,6 +29,10 @@
         {{ form_label(form.CV) }}
         {{ form_widget(form.CV) }}
         {{ form_errors(form.CV) }}
+
+        {% if candidate.CV is not null %}
+            {{ candidate.CV }}
+        {% endif %}
     </div>
 </div>
 

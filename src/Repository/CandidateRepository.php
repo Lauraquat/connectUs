@@ -14,15 +14,13 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Candidate[]    findAll()
  * @method Candidate[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CandidateRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class CandidateRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Candidate::class);
     }
 
-    public function save(Candidate $entity, bool $flush = false): void
-    {
+    public function save(Candidate $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,37 +28,11 @@ class CandidateRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Candidate $entity, bool $flush = false): void
-    {
+    public function remove(Candidate $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
             $this->getEntityManager()->flush();
         }
     }
-
-//    /**
-//     * @return Candidate[] Returns an array of Candidate objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Candidate
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }
