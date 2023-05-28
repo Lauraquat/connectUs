@@ -39,12 +39,16 @@ class CandidateRepository extends ServiceEntityRepository
         }
     }
 
-    //public fonction
-    /* 
-    select recruteurID from like where candidate_id = ?, []
+    //public fonction likeCandidate(Candiate $entity, bool $flush = false, $recruteurID) : void
+
+    /*
+        $this->getEntityManager()->createQuery('SELECT candidate_id FROM likes WHERE recrutreur_id = $recruteurID');
+        $result = $query->getResult();
+
+        return $result;
     */
 
-    
+
 
 //    /**
 //     * @return Candidate[] Returns an array of Candidate objects

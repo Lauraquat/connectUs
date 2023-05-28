@@ -95,7 +95,6 @@ class RecruterController extends AbstractController
         
         $candidate = $candidateRepository->findOneBy(['owner' => $candidateId]);
         $recruter = $recruterRepository->find($recruterId);
-        //$likeRepository->save($likeRepository,true);
         
 
         // Vérifier si les instances sont valides
