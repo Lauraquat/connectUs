@@ -86,7 +86,7 @@ class CandidateController extends AbstractController
     public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, TranslatorInterface $translator): Response {
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
-
+dump('controller_od');
         if ($form->isSubmitted() && $form->isValid()) {
             $candidateRepository->save($candidate, true);
 

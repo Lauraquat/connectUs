@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -31,21 +33,27 @@ class CandidateType extends AbstractType
             ->add('disponibility', DateType::class, [
                 'widget' => 'single_text',
             ])
-            ->add('CV', FileType::class, [
-                'label' => 'CV (PDF file)',
-                'mapped' => false,
-                'required' => true,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '5000k',
-                        'mimeTypes' => [
-                            'application/pdf',
-                            'application/x-pdf',
-                        ],
-                        'mimeTypesMessage' => 'Please upload a valid PDF document',
-                    ])
-                ],
-            ]);
+            ->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event): void {
+                $candidate = $event->getData();
+                $form = $event->getForm();
+
+                $form->add('CV', FileType::class, [
+                    'label' => 'CV (PDF file)',
+                    'mapped' => false,
+                    'required' => (null === $candidate->getCv()),
+                    'constraints' => [
+                        new File([
+                            'maxSize' => '5000k',
+                            'mimeTypes' => [
+                                'application/pdf',
+                                'application/x-pdf',
+                            ],
+                            'mimeTypesMessage' => 'Please upload a valid PDF document',
+                        ])
+                    ],
+                ]);
+            })
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

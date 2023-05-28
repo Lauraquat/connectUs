@@ -45,7 +45,7 @@
             </div>
         </div>
     {% endblock %}
-    {% block body %}
+    {% block body_base %}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div class="flash-{{ label }}">
@@ -54,5 +54,7 @@
             {% endfor %}
         {% endfor %}
     {% endblock %}
+
+    {{ block('body') }}
 </body>
 </html>
