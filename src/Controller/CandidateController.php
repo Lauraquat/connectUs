@@ -62,7 +62,13 @@ class CandidateController extends AbstractController
 
             $candidateRepository->save($candidate, true);
 
+            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+            $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
+
             return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+
+        }else {
+            $this->addFlash('danger', $translator->trans('Error during creation. Please retry.'));
         }
 
         return $this->renderForm('candidate/new.html.twig', [
@@ -80,15 +86,19 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_candidate_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository): Response
-    {
+    public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, TranslatorInterface $translator): Response {
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
-
+dump('controller_od');
         if ($form->isSubmitted() && $form->isValid()) {
             $candidateRepository->save($candidate, true);
 
+            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+            $this->addFlash('success', $translator->trans('The profil has been modified successfully.'));
+
             return $this->redirectToRoute('app_recruter_index', [], Response::HTTP_SEE_OTHER);
+        }else{
+            $this->addFlash('danger', $translator->trans('Error during edition. Please retry'));
         }
 
         return $this->renderForm('candidate/edit.html.twig', [
@@ -98,12 +108,18 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_candidate_delete', methods: ['POST'])]
-    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session): Response
+    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session, TranslatorInterface $translator): Response
     {
         if ($this->isCsrfTokenValid('delete'.$candidate->getId(), $request->request->get('_token'))) {
             $session = new Session();
             $session->invalidate();
             $candidateRepository->remove($candidate, true);
+
+            // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
+            $this->addFlash('success', $translator->trans('The profil has been deleted successfully.'));
+
+        }else {
+            $this->addFlash('danger', $translator->trans('Invalid token.'));
         }
 
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);

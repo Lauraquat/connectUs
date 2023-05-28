@@ -19,31 +19,31 @@
 
             {{ form_label(registrationForm.type) }}
             {{ form_widget(registrationForm.type) }}
+            {{ form_errors(registrationForm.type) }}
         </div>
 
         <div class="formRegistration">
             <label>{% trans %}Name{% endtrans %}</label>
             {{ form_widget(registrationForm.name) }}
+            {{ form_errors(registrationForm.name) }}
         </div>
 
         <div class="formRegistration">
             {{ form_label(registrationForm.email) }}
             {{ form_widget(registrationForm.email) }}
+            {{ form_errors(registrationForm.email) }}
         </div>
 
         <div class="formRegistration">
             <label >{% trans %}Password{% endtrans %}</label>
             {{ form_widget(registrationForm.plainPassword) }}
+            {{ form_errors(registrationForm.plainPassword) }}
         </div>
 
         <div class="formRegistration">
             <label>{% trans %}Phone number{% endtrans %}</label>
             {{ form_widget(registrationForm.phoneNumber) }}
-        </div>
-
-        <div >
-            <label >{% trans %}Agree terms{% endtrans %}</label>
-            {{ form_widget(registrationForm.agreeTerms) }}
+            {{ form_errors(registrationForm.phoneNumber) }}
         </div>
 
         <button type="submit" class="btn buttonRegister">{% trans %}Register{% endtrans %}</button>

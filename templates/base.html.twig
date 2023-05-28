@@ -45,6 +45,16 @@
             </div>
         </div>
     {% endblock %}
-    {% block body %}{% endblock %}
+    {% block body_base %}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endblock %}
+
+    {{ block('body') }}
 </body>
 </html>

@@ -24,7 +24,7 @@ class Recruter
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address2 = null;
 
     #[ORM\Column(length: 255)]

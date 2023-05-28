@@ -1,3 +1,4 @@
+
 Access Denied: Accès non autorisé
 Address Complement: Complément d'adresse
 Address2: Complément d'adresse
@@ -5,6 +6,7 @@ Address: Adresse
 Agree terms: En cochant, vous acceptez les conditions générales
 Are you sure you want to delete your profile ?: Etes vous sûr de vouloir supprimer votre profil ?
 Back to list: Retour à la liste
+CV (PDF file): CV (fichier PDF)
 Candidate: Candidat
 Candidates list: Liste des candidats
 City: Ville
@@ -20,18 +22,22 @@ Discover our candidates: Découvrez nos candidats
 Discover our recruiters: Découvrez nos recruteurs
 Disponibility: Disponibilité
 Domain: Domaine
+Edit candidate: Edition d'un candidat
 Edit my profile: Editer mon profil
 Edit recruter: Edition recruteur
 Email: Email
 Error 500: Erreur 500
 Error during CV import: Erreur lors de l'import du CV
+Error during creation. Please retry.: Erreur durant la création du profil. Merci de recommencer.
+Error during edition. Please retry: Erreur durant l'édition du profil. Merci de recommencer
 Error picture: Image d'erreur
 General informations: Informations générales
 Homepage: Page d'accueil
 If you are looking for jobs, with ConnectUs, you have access to a multitude of profiles companies and the jobs they offer.: Si vous êtes à la recherche d'un emploi, avec ConnectUs, vous avez accès à une multitude de profils d'entreprises et aux emplois qu'elles proposent.
+Invalid token.: Token invalide (vous n'avez pas les droits pour supprimer ce profil)
 Login: Se connecter
 Logout: Se déconnecter
-Name: Nom
+Name: Dénomination
 New Candidate: Nouveau candidat
 New Recruter: Nouveau recruteur
 No candidates found: Pas de candidats enregistrés
@@ -51,6 +57,9 @@ Searched post: Poste recherché
 See profile: Voir le profil
 Show candidates: Voir les candidats
 Show recruters: Voir les recruteurs
+The profil has been created successfully.: Le profil a été créé avec succès.
+The profil has been deleted successfully.: Le profil a été supprimé avec succès.
+The profil has been modified successfully.: Le profil a été édité avec succès
 The website to find your new job or your future employee!: Le site web permettant de trouver ton nouveau job ou ton futur employé !
 This page does not exist please return to the home page: Cette page n'existe pas. Merci de retourner à la page d'accueil
 Type: Type
