@@ -23,7 +23,7 @@ class RecruterController extends AbstractController
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
     public function index(RecruterRepository $recruterRepository, CandidateRepository $candidateRepository, LikeRepository $likeRepository): Response
     {
-        $candidate = $candidateRepository->find($this->getUser());
+        $candidate = $candidateRepository->findOneByOwner($this->getUser());
 
         return $this->render('recruter/index.html.twig', [
             'recruters' => $recruterRepository->findAll(),
@@ -63,7 +63,7 @@ class RecruterController extends AbstractController
     #[Route('/{id}', name: 'app_recruter_show', methods: ['GET'])]
     public function show(Recruter $recruter, CandidateRepository $candidateRepository): Response
     {
-       $candidate = $candidateRepository->find($this->getUser()->getId());
+        $candidate = $candidateRepository->findOneByOwner($this->getUser()->getId());
 
         return $this->render('recruter/show.html.twig', [
             'recruter' => $recruter,
@@ -116,7 +116,7 @@ class RecruterController extends AbstractController
     #[Route('/like/{id}', name: 'app_recruter_like', methods: ['GET'])]
     public function likeRecruter(Request $request, Recruter $recruter, LikeRepository $likeRepository, CandidateRepository $candidateRepository): Response
     {
-        $candidate = $candidateRepository->find($this->getUser()->getId());
+        $candidate = $candidateRepository->findOneByOwner($this->getUser()->getId());
 
         $like = new Like();
         $like->setRecruter($recruter);

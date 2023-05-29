@@ -26,7 +26,7 @@ class CandidateController extends AbstractController
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
     public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository, LikeRepository $likeRepository ): Response
     {
-        $recruter = $recruterRepository->find($this->getUser());
+        $recruter = $recruterRepository->findOneByOwner($this->getUser());
 
         return $this->render('candidate/index.html.twig', [
             'candidates' => $candidateRepository->findAll(),
@@ -65,6 +65,7 @@ class CandidateController extends AbstractController
                 }
 
                 $candidateRepository->save($candidate, true);
+
                 // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
                 $this->addFlash('success', $translator->trans('The profil has been created successfully.'));
 
@@ -83,7 +84,7 @@ class CandidateController extends AbstractController
     #[Route('/{id}', name: 'app_candidate_show', methods: ['GET'])]
     public function show(Candidate $candidate, RecruterRepository $recruterRepository): Response
     {
-        $recruter = $recruterRepository->find($this->getUser()->getId());
+        $recruter = $recruterRepository->findOneByOwner($this->getUser()->getId());
 
         return $this->render('candidate/show.html.twig', [
             'candidate' => $candidate,
@@ -92,12 +93,32 @@ class CandidateController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'app_candidate_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, TranslatorInterface $translator): Response {
+    public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SluggerInterface $slugger, TranslatorInterface $translator): Response {
         $form = $this->createForm(CandidateType::class, $candidate);
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
+
+                /** @var UploadedFile $CV */
+                $CV = $form->get('CV')->getData();
+
+                if ($CV) {
+                    $originalFilename = pathinfo($CV->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $CV->guessExtension();
+
+                    try {
+                        $CV->move(
+                            $this->getParameter('CV_directory'),
+                            $newFilename
+                        );
+                    } catch (FileException $e) {
+                        throw new DomainException($translator->trans("Error during CV import"));
+                    }
+                    $candidate->setCV($newFilename);
+                }
+
                 $candidateRepository->save($candidate, true);
 
                 // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
@@ -136,7 +157,7 @@ class CandidateController extends AbstractController
     #[Route('/like/{id}', name: 'app_candidate_like', methods: ['GET'])]
     public function likeCandidate(Request $request, Candidate $candidate, LikeRepository $likeRepository, RecruterRepository $recruterRepository): Response
     {
-        $recruter = $recruterRepository->find($this->getUser()->getId());
+        $recruter = $recruterRepository->findOneByOwner($this->getUser()->getId());
 
         $like = new Like();
         $like->setCandidate($candidate);
