@@ -7,6 +7,10 @@ body {
     width: 100% ;
 }
 
+input {
+    height: 2.5rem;
+}
+
 /* homepage */
 .homepageContainer {
     width: 100%;
@@ -117,6 +121,7 @@ body {
 .formRegistrationType input {
     margin-left: 1rem;
     margin-right: 0.5rem;
+    height: 0.8rem;
 }
 
 .buttonRegister {
@@ -311,6 +316,12 @@ body {
     width: 50%;
 }
 
+.alreadyLiked {
+    color: #3D4E63;
+    align-self: center;
+    margin-right: 1rem;
+}
+
 .deleteButton {
     border: 1px solid #3D4E63;
     margin-right: 1rem;
@@ -319,6 +330,7 @@ body {
 .buttons {
     display: flex;
     flex-direction: row;
+    height: fit-content;
 }
 
 .formFooter {

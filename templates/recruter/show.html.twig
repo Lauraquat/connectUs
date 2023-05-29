@@ -7,7 +7,15 @@
     <div class="containerIndex">
         <div class="titleAndButton">
             <h1 class="titleIndex">{{recruter.owner.name()}}</h1>
-            <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
+            <div class="buttons">
+                {% if candidate.isRecruterLiked(recruter) %} 
+                    <div class="btn alreadyLiked">{% trans %}Recruter already liked{% endtrans %}</div>
+                {% else %} 
+                    <a class="btn profileButton" href={{path('app_recruter_like',{'id' : recruter.id})}}>{% trans %}Like recruter{% endtrans %}</a>
+                {% endif %} 
+                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
+                
+            </div>
         </div>
         <div class="containerCardShow">
             <div class="containerNewForm">
@@ -62,11 +70,7 @@
                     </div>
                 </div>
             </div>
-            {% if candidate.isRecruterLiked(recruter) %}
-                <div class="text-white">{% trans %}Recruter already liked{% endtrans %}</div>
-            {% else %}
-                <a href={{path('app_recruter_like',{'id' : recruter.id})}}>{% trans %}Like recruter{% endtrans %}</a>
-            {% endif %}
+           
         </div>
     </div>
 {% endblock %}
