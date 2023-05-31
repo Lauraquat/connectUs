@@ -29,6 +29,11 @@
                 {{ recruter.owner.phoneNumber }}
             </p>
         </div>
-        <a class="btn buttonRegister" href="{{ path('app_recruter_show', {'id': recruter.id}) }}">{% trans %}See profile{% endtrans %}</a>
+        {% if not app.user.hasProfile() %}
+            <p class="btn buttonRegister" >{% trans %}Create your profil before showing{% endtrans %}</p>
+        {% else %}
+            <a class="btn buttonRegister" href="{{ path('app_recruter_show', {'id': recruter.id}) }}">{% trans %}See profile{% endtrans %}</a>
+        {% endif %}
+
     </div>
 </div>

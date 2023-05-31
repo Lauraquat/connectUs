@@ -29,6 +29,10 @@
                 {{ candidate.owner.email }}
             </p>
         </div>
-        <a class="btn buttonRegister" href="{{ path('app_candidate_show', {'id': candidate.id}) }}">{% trans %}See profile{% endtrans %}</a>
+        {% if not app.user.hasProfile() %}
+            <p class="btn buttonRegister">{% trans %}Create your profil before showing{% endtrans %}</p>
+        {% else %}
+            <a class="btn buttonRegister" href="{{ path('app_candidate_show', {'id': candidate.id}) }}">{% trans %}See profile{% endtrans %}</a>
+        {% endif %}
     </div>
 </div>
