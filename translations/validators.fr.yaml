@@ -135,3 +135,4 @@
 'You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.': 'Vous devez sélectionner au maximum {{ limit }} choix.|Vous devez sélectionner au maximum {{ limit }} choix.'
 There is already an account with this email: Un compte existe déjà avec cet email
 The postal code is invalide: Le code postal est invalide
+Please upload a valid PDF document: Merci de sélectionner un document PDF valide
