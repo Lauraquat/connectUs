@@ -27,7 +27,7 @@
             <h2 class="titleIndex">{% trans %}Candidates who liked me{% endtrans %}</h2>
         </div>
         <div class="containerCards">
-            {% for like in likeCandidates  %}
+            {% for like in recrutersWhoLikedCandidate  %}
                 {% include 'candidate/_profil_card.html.twig' with {'candidate': like.candidate} %}
             {% else %}
                 <tr>

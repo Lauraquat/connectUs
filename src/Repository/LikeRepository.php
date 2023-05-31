@@ -36,4 +36,31 @@ class LikeRepository extends ServiceEntityRepository {
         }
     }
 
+    public function recrutersWhoLikedCandidate(int $likedId): array{
+        // On créé le queryBuilder avec l'alias de l'entité concernée
+        $queryBuilder = $this->createQueryBuilder('l');
+
+        $queryBuilder->andWhere('l.likedType = :liked') //type du recruteur liké
+                     ->andWhere('l.recruter = :id') //id du recruteur connecté
+                     ->setParameter('liked', "Candidate")
+                     ->setParameter('id', $likedId)
+                     ->orderBy('l.date');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+
+    public function candidatesWhoLikedRecruter(int $likedId): array{
+        // On créé le queryBuilder avec l'alias de l'entité concernée
+        $queryBuilder = $this->createQueryBuilder('l');
+
+        $queryBuilder->andWhere('l.likedType = :liked') //type du candidat liké
+                     ->andWhere('l.candidate = :id') //id du candidat connecté
+                     ->setParameter('liked', "Recruteur")
+                     ->setParameter('id', $likedId)
+                     ->orderBy('l.date');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 }
