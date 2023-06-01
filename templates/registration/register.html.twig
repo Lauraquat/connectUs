@@ -3,54 +3,54 @@
 {% block title %}{% trans %}Register{% endtrans %}{% endblock %}
 
 {% block body %}
-<div class="containerPageRegister">
-    <div class="welcomeRegister">
-        <div>
-            <p class="RegisterInformation">{% trans %}Welcome on ConnectUs,{% endtrans %}</p>
-            <p class="registerSubtitle">{% trans %}The website to find your new job or your future employee!{% endtrans %}</p>
+    <div class="containerPageRegister">
+        <div class="welcomeRegister">
+            <div>
+                <p class="RegisterInformation">{% trans %}Welcome on ConnectUs,{% endtrans %}</p>
+                <p class="registerSubtitle">{% trans %}The website to find your new job or your future employee!{% endtrans %}</p>
+            </div>
+        </div>
+        <div class="containerRegister">
+            <h1 class="registerTitle">{% trans %}Register{% endtrans %}</h1>
+
+            {{ form_start(registrationForm) }}
+
+            <div class="formRegistrationType">
+
+                {{ form_label(registrationForm.type) }}
+                {{ form_widget(registrationForm.type) }}
+                {{ form_errors(registrationForm.type) }}
+            </div>
+
+            <div class="formRegistration">
+                <label>{% trans %}Name{% endtrans %}</label>
+                {{ form_widget(registrationForm.name) }}
+                {{ form_errors(registrationForm.name) }}
+            </div>
+
+            <div class="formRegistration">
+                {{ form_label(registrationForm.email) }}
+                {{ form_widget(registrationForm.email) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
+
+            <div class="formRegistration">
+                <label >{% trans %}Password{% endtrans %}</label>
+                {{ form_widget(registrationForm.plainPassword) }}
+                {{ form_errors(registrationForm.plainPassword) }}
+            </div>
+
+            <div class="formRegistration">
+                <label>{% trans %}Phone number{% endtrans %}</label>
+                {{ form_widget(registrationForm.phoneNumber) }}
+                {{ form_errors(registrationForm.phoneNumber) }}
+            </div>
+
+            <button type="submit" class="btn buttonRegister">{% trans %}Register{% endtrans %}</button>
+
+            {{ form_end(registrationForm) }}
         </div>
     </div>
-    <div class="containerRegister">
-        <h1 class="registerTitle">{% trans %}Register{% endtrans %}</h1>
-
-        {{ form_start(registrationForm) }}
-
-        <div class="formRegistrationType">
-
-            {{ form_label(registrationForm.type) }}
-            {{ form_widget(registrationForm.type) }}
-            {{ form_errors(registrationForm.type) }}
-        </div>
-
-        <div class="formRegistration">
-            <label>{% trans %}Name{% endtrans %}</label>
-            {{ form_widget(registrationForm.name) }}
-            {{ form_errors(registrationForm.name) }}
-        </div>
-
-        <div class="formRegistration">
-            {{ form_label(registrationForm.email) }}
-            {{ form_widget(registrationForm.email) }}
-            {{ form_errors(registrationForm.email) }}
-        </div>
-
-        <div class="formRegistration">
-            <label >{% trans %}Password{% endtrans %}</label>
-            {{ form_widget(registrationForm.plainPassword) }}
-            {{ form_errors(registrationForm.plainPassword) }}
-        </div>
-
-        <div class="formRegistration">
-            <label>{% trans %}Phone number{% endtrans %}</label>
-            {{ form_widget(registrationForm.phoneNumber) }}
-            {{ form_errors(registrationForm.phoneNumber) }}
-        </div>
-
-        <button type="submit" class="btn buttonRegister">{% trans %}Register{% endtrans %}</button>
-
-        {{ form_end(registrationForm) }}
-    </div>
-</div>
 
 {% endblock %}
 

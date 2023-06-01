@@ -23,8 +23,10 @@ class RecruterController extends AbstractController
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
     public function index(RecruterRepository $recruterRepository, CandidateRepository $candidateRepository, LikeRepository $likeRepository): Response
     {
-        $likedId = $candidateRepository->findOneByOwner($this->getUser())->getId();
-        $candidatesWhoLikedRecruter = $likeRepository->candidatesWhoLikedRecruter($likedId);
+        $candidatesWhoLikedRecruter = [];
+        If ($candidate = $candidateRepository->findOneByOwner($this->getUser())) {
+            $candidatesWhoLikedRecruter = $likeRepository->candidatesWhoLikedRecruter($candidate->getId());
+        }
 
         return $this->render('recruter/index.html.twig', [
             'recruters' => $recruterRepository->findAll(),

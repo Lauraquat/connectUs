@@ -12,6 +12,7 @@
                 <a class="btn profileButton" href="{{ path('app_recruter_edit', {'id': app.user.recruter.id}) }}">{% trans %}Edit my profile{% endtrans %}</a>
             {% endif %}
         </div>
+
         <div class="containerCards">
             {% for candidate in candidates %}
                 {{  include('candidate/_profil_card.html.twig') }}
@@ -22,19 +23,20 @@
             {% endfor %}
         </div>
     </div>
+
     <div class="containerIndex">
         <div class="titleAndButton">
             <h2 class="titleIndex">{% trans %}Candidates who liked me{% endtrans %}</h2>
         </div>
+
         <div class="containerCards">
-            {% for like in recrutersWhoLikedCandidate  %}
+            {% for like in recrutersWhoLikedCandidate %}
                 {% include 'candidate/_profil_card.html.twig' with {'candidate': like.candidate} %}
             {% else %}
                 <tr>
                     <td colspan="8">{% trans %}No candidate found{% endtrans %}</td>
                 </tr>
             {% endfor %}
-
         </div>
     </div>
 

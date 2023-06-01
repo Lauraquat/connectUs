@@ -51,7 +51,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         $user = $token->getUser();
         if ($user->isCandidate()) {
             $user->setRoles(['ROLE_CANDIDATE']);
-           return new RedirectResponse($this->urlGenerator->generate('app_recruter_index'));
+            return new RedirectResponse($this->urlGenerator->generate('app_recruter_index'));
         }else{
             $user->setRoles(['ROLE_RECRUTER']);
             return new RedirectResponse($this->urlGenerator->generate('app_candidate_index'));

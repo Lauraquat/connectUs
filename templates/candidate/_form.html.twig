@@ -1,6 +1,7 @@
 {{ form_start(form) }}
 <div class="containerNewForm">
     <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
+
     <div class="formRow">
         <div class="cityInput">
             {{ form_label(form.city) }}
@@ -13,6 +14,7 @@
             {{ form_errors(form.postalCode) }}
         </div>
     </div>
+
     <div class="formRow">
         <div class="formCreateNew">
             {{ form_label(form.searchedPost) }}
@@ -25,6 +27,7 @@
             {{ form_errors(form.disponibility) }}
         </div>
     </div>
+
     <div class="cityInput">
         {{ form_label(form.CV) }}
         {{ form_widget(form.CV) }}
