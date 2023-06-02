@@ -146,11 +146,13 @@ class CandidateController extends AbstractController
 
     #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/{id}', name: 'app_candidate_delete', methods: ['POST'])]
-    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session, TranslatorInterface $translator): Response
+    public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session, TranslatorInterface $translator, LikeRepository $likeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$candidate->getId(), $request->request->get('_token'))) {
             $session = new Session();
             $session->invalidate();
+            $likeRepository->removeLikesBy(null, $candidate);
+
             $candidateRepository->remove($candidate, true);
 
             // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
