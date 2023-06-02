@@ -8,69 +8,70 @@
         <div class="titleAndButton">
             <h1 class="titleIndex">{{recruter.owner.name()}}</h1>
             <div class="buttons">
-                {% if candidate.isRecruterLiked(recruter) %} 
+                {% if candidate.isRecruterLiked(recruter) %}
                     <div class="btn alreadyLiked">{% trans %}Recruter already liked{% endtrans %}</div>
-                {% else %} 
+                {% else %}
                     <a class="btn profileButton" href={{path('app_recruter_like',{'id' : recruter.id})}}>{% trans %}Like recruter{% endtrans %}</a>
-                {% endif %} 
+                {% endif %}
                 <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
-                
             </div>
-        </div>
-        <div class="containerCardShow">
-            <div class="containerNewForm">
-                <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
-                <div class="informationRow">
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Company name{% endtrans %}</p>
-                        {{recruter.companyName}}
-                    </div>
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Domain{% endtrans %}</p>
-                        {{ recruter.domain}}
-                    </div>
-                </div>
-            </div>
-            <div class="containerNewForm">
-                <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
-                <div class="informationRow">
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Address{% endtrans %}</p>
-                        {{recruter.address}}
-                    </div>
-                    {% if recruter.address2 is not null %}
-                        <div>
-                            <p class="titleInformationShow">{% trans %}Address Complement{% endtrans %}</p>
-                            {{ recruter.address2}}
-                        </div>
-                    {% endif %}
-                </div>
-                <div class="informationRow">
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Postal code{% endtrans %}</p>
-                        {{ recruter.postalCode}}
-                    </div>
-                    <div>
-                        <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
-                        {{recruter.city}}
-                    </div>
-                </div>
-
-            </div>
-            <div class="containerNewForm">
-                <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
-                <div class="informationRow">
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
-                        {{recruter.owner.email}}
-                    </div>
-                    <div>
-                        <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
-                        {{ recruter.owner.phoneNumber }}
-                    </div>
-                </div>
-            </div>
-           
         </div>
     </div>
+
+    <div class="containerCardShow">
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
+            <div class="informationRow">
+                <div>
+                    <p class="titleInformationShow">{% trans %}Company name{% endtrans %}</p>
+                    {{recruter.companyName}}
+                </div>
+                <div>
+                    <p class="titleInformationShow">{% trans %}Domain{% endtrans %}</p>
+                    {{ recruter.domain}}
+                </div>
+            </div>
+        </div>
+
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
+            <div class="informationRow">
+                <div>
+                    <p class="titleInformationShow">{% trans %}Address{% endtrans %}</p>
+                    {{recruter.address}}
+                </div>
+                {% if recruter.address2 is not null %}
+                    <div>
+                        <p class="titleInformationShow">{% trans %}Address Complement{% endtrans %}</p>
+                        {{ recruter.address2}}
+                    </div>
+                {% endif %}
+            </div>
+            <div class="informationRow">
+                <div>
+                    <p class="titleInformationShow">{% trans %}Postal code{% endtrans %}</p>
+                    {{ recruter.postalCode}}
+                </div>
+                <div>
+                    <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
+                    {{recruter.city}}
+                </div>
+            </div>
+        </div>
+
+        <div class="containerNewForm">
+            <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
+            <div class="informationRow">
+                <div>
+                    <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
+                    {{recruter.owner.email}}
+                </div>
+                <div>
+                    <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
+                    {{ recruter.owner.phoneNumber }}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

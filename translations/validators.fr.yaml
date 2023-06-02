@@ -133,5 +133,6 @@
 'Unsupported card type or invalid card number.': 'Type de carte non supporté ou numéro invalide.'
 'You must select at least {{ limit }} choice.|You must select at least {{ limit }} choices.': 'Vous devez sélectionner au moins {{ limit }} choix.|Vous devez sélectionner au moins {{ limit }} choix.'
 'You must select at most {{ limit }} choice.|You must select at most {{ limit }} choices.': 'Vous devez sélectionner au maximum {{ limit }} choix.|Vous devez sélectionner au maximum {{ limit }} choix.'
-There is already an account with this email: Un compte existe déjà avec cet email
+Please upload a valid PDF document: Merci de sélectionner un document PDF valide
 The postal code is invalide: Le code postal est invalide
+There is already an account with this email: Un compte existe déjà avec cet email

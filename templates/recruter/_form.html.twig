@@ -15,6 +15,7 @@
             </div>
         </div>
     </div>
+
     <div class="containerNewForm">
         <h2 class="subtitleNewProfile">{% trans %}Address{% endtrans %}</h2>
         <div class="formInput">
@@ -22,11 +23,11 @@
             {{ form_widget(form.address) }}
             {{ form_errors(form.address) }}
         </div>
-            <div class="formInput">
-                {{ form_label(form.address2) }}
-                {{ form_widget(form.address2) }}
-                {{ form_errors(form.address2) }}
-            </div>
+        <div class="formInput">
+            {{ form_label(form.address2) }}
+            {{ form_widget(form.address2) }}
+            {{ form_errors(form.address2) }}
+        </div>
         <div class="formRow">
             <div class="formCreateNew">
                 {{ form_label(form.postalCode) }}

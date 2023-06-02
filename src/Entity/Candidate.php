@@ -32,7 +32,6 @@ class Candidate
     #[ORM\Column(type: 'string')]
     private ?string $CV = null;
 
-
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;

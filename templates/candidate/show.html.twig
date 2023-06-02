@@ -4,61 +4,62 @@
 
     {% block body %}
 
-<div class="containerIndex">
-    <div class="titleAndButton">
-        <h1 class="titleIndex">{{ candidate.owner.name }}</h1>
+        <div class="containerIndex">
+            <div class="titleAndButton">
+                <h1 class="titleIndex">{{ candidate.owner.name }}</h1>
 
-        <div class="buttons">
-            {% if recruter.isCandidateLiked(candidate) %} 
-                <div class="btn alreadyLiked" >{% trans %}Candidate already liked{% endtrans %}</div>
-            {% else %} 
-                <a class="btn profileButton"  href={{path('app_candidate_like',{'id' : candidate.id})}}>{% trans %}Like candidate{% endtrans %}</a>
-            {% endif %} 
-                
-            <a class="btn profileButton" href="{{ path('app_candidate_index') }}">{% trans %}Back to list{% endtrans %}</a>
-        </div>
+                <div class="buttons">
+                    {% if recruter.isCandidateLiked(candidate) %}
+                        <div class="btn alreadyLiked" >{% trans %}Candidate already liked{% endtrans %}</div>
+                    {% else %}
+                        <a class="btn profileButton"  href={{path('app_candidate_like',{'id' : candidate.id})}}>{% trans %}Like candidate{% endtrans %}</a>
+                    {% endif %}
 
-    </div>
-    <div class="containerCardShow">
-        <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
-            <div class="informationRow">
-                <div>
-                    <p class="titleInformationShow">{% trans %}Searched post{% endtrans %}</p>
-                    {{candidate.searchedPost}}
-                </div>
-                <div>
-                    <p class="titleInformationShow">{% trans %}Disponibility{% endtrans %}</p>
-                    {{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}
-                </div>
-                <div>
-                    <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
-                    {{ candidate.city}}
+                    <a class="btn profileButton" href="{{ path('app_candidate_index') }}">{% trans %}Back to list{% endtrans %}</a>
                 </div>
             </div>
         </div>
-        <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
-            <div class="informationRow">
-                <div>
-                    <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
-                    {{candidate.owner.email}}
-                </div>
-                <div>
-                    <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
-                    {{ candidate.owner.phoneNumber }}
-                </div>
 
+        <div class="containerCardShow">
+            <div class="containerNewForm">
+                <h2 class="subtitleNewProfile">{% trans %}General informations{% endtrans %}</h2>
+                <div class="informationRow">
+                    <div>
+                        <p class="titleInformationShow">{% trans %}Searched post{% endtrans %}</p>
+                        {{candidate.searchedPost}}
+                    </div>
+                    <div>
+                        <p class="titleInformationShow">{% trans %}Disponibility{% endtrans %}</p>
+                        {{ candidate.disponibility ? candidate.disponibility|date('d/m/Y') : '' }}
+                    </div>
+                    <div>
+                        <p class="titleInformationShow">{% trans %}City{% endtrans %}</p>
+                        {{ candidate.city}}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="containerNewForm">
-            <h2 class="subtitleNewProfile">{% trans %}Curriculum vitae{% endtrans %}</h2>
-            <div class="informationRow">
-                <div class="showCV">
-                    <a href="{{ asset('uploads/CV/' ~ candidate.CV) }}">{% trans %}View CV{% endtrans %}</a>
+
+            <div class="containerNewForm">
+                <h2 class="subtitleNewProfile">{% trans %}Contacts{% endtrans %}</h2>
+                <div class="informationRow">
+                    <div>
+                        <p class="titleInformationShow">{% trans %}Email{% endtrans %}</p>
+                        {{candidate.owner.email}}
+                    </div>
+                    <div>
+                        <p class="titleInformationShow">{% trans %}Phone number{% endtrans %}</p>
+                        {{ candidate.owner.phoneNumber }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="containerNewForm">
+                <h2 class="subtitleNewProfile">{% trans %}Curriculum vitae{% endtrans %}</h2>
+                <div class="informationRow">
+                    <div class="showCV">
+                        <a href="{{ asset('uploads/CV/' ~ candidate.CV) }}">{% trans %}View CV{% endtrans %}</a>
+                    </div>
                 </div>
             </div>
         </div>
-     
-    </div>
-{% endblock %}
+    {% endblock %}

@@ -26,11 +26,14 @@ class CandidateController extends AbstractController
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
     public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository, LikeRepository $likeRepository ): Response
     {
-        $recruter = $recruterRepository->findOneByOwner($this->getUser());
+        $recrutersWhoLikedCandidate = [];
+        if($recruter = $recruterRepository->findOneByOwner($this->getUser())){
+            $recrutersWhoLikedCandidate = $likeRepository->recrutersWhoLikedCandidate($recruter->getId());
+        }
 
         return $this->render('candidate/index.html.twig', [
             'candidates' => $candidateRepository->findAll(),
-            'likeCandidates' => $likeRepository->findByRecruter($recruter),
+            'recrutersWhoLikedCandidate' => $recrutersWhoLikedCandidate,
         ]);
     }
 
@@ -162,6 +165,7 @@ class CandidateController extends AbstractController
         $like = new Like();
         $like->setCandidate($candidate);
         $like->setRecruter($recruter);
+        $like->setLikedType($this->getUser()->getType());
 
         $likeRepository->save($like, true);
 
