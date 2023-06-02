@@ -9,8 +9,18 @@
             <div class="homepageRegister">
                 <h1 class="homeTitle" >{% trans %}Welcome on <br /> ConnectUs{% endtrans %}</h1>
                 <h2 class="homeSubtitle">{% trans %}Register or login to use the network <br /> which is just waiting for you !{% endtrans %}</h2>
-                <a class="btn homepageButton " href="{{path("app_register")}}">{% trans %}Register{% endtrans %}</a>
-                <a class="btn homepageButton " href="{{path("app_login")}}">{% trans %}Login{% endtrans %}</a>
+                {% if is_granted('ROLE_CANDIDATE') %}
+                    <a class="btn homepageButton" href="{{ path('app_recruter_index') }}">{% trans %}Show recruters{% endtrans %}</a>
+                {% elseif is_granted('ROLE_RECRUTER') %}
+                    <a class="btn homepageButton" href="{{ path('app_candidate_index') }}">{% trans %}Show candidates{% endtrans %}</a>
+                {% else %}
+                    <a class="btn homepageButton" href="{{ path("app_register")}}">{% trans %}Register{% endtrans %}</a>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <a class="btn homepageButton" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
+                {% else %}
+                    <a class="btn homepageButton" href="{{ path('app_login') }}">{% trans %}Login{% endtrans %}</a>
+                {% endif %}
             </div>
             <img class="homePicture" src="{{ asset('images/home.jpg') }}" alt="Logo"/>
         </div>
