@@ -9,6 +9,7 @@ use App\Repository\CandidateRepository;
 use App\Repository\LikeRepository;
 use App\Repository\RecruterRepository;
 use DomainException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -23,6 +24,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/candidate')]
 class CandidateController extends AbstractController
 {
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/', name: 'app_candidate_index', methods: ['GET'])]
     public function index(CandidateRepository $candidateRepository, RecruterRepository $recruterRepository, LikeRepository $likeRepository ): Response
     {
@@ -37,6 +39,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/new', name: 'app_candidate_new', methods: ['GET', 'POST'])]
     public function new(Request $request, CandidateRepository $candidateRepository, SluggerInterface $slugger, TranslatorInterface $translator): Response
     {
@@ -84,6 +87,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/{id}', name: 'app_candidate_show', methods: ['GET'])]
     public function show(Candidate $candidate, RecruterRepository $recruterRepository): Response
     {
@@ -95,6 +99,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/{id}/edit', name: 'app_candidate_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SluggerInterface $slugger, TranslatorInterface $translator): Response {
         $form = $this->createForm(CandidateType::class, $candidate);
@@ -139,6 +144,7 @@ class CandidateController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/{id}', name: 'app_candidate_delete', methods: ['POST'])]
     public function delete(Request $request, Candidate $candidate, CandidateRepository $candidateRepository, SessionInterface $session, TranslatorInterface $translator): Response
     {
@@ -157,6 +163,7 @@ class CandidateController extends AbstractController
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/like/{id}', name: 'app_candidate_like', methods: ['GET'])]
     public function likeCandidate(Request $request, Candidate $candidate, LikeRepository $likeRepository, RecruterRepository $recruterRepository): Response
     {

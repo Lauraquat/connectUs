@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Candidate;
 use App\Entity\Like;
+use App\Entity\Recruter;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -34,6 +36,25 @@ class LikeRepository extends ServiceEntityRepository {
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function removeLikesBy(?Candidate $candidate = null, ?Recruter $recruter = null): void
+    {
+        if ($candidate !== null) {
+            $likes = $this->findBy(['candidate' => $candidate]);
+            foreach ($likes as $like) {
+                $this->getEntityManager()->remove($like);
+            }
+        }
+
+        if ($recruter !== null) {
+            $likes = $this->findBy(['recruter' => $recruter]);
+            foreach ($likes as $like) {
+                $this->getEntityManager()->remove($like);
+            }
+        }
+
+        $this->getEntityManager()->flush();
     }
 
     public function recrutersWhoLikedCandidate(int $likedId): array{

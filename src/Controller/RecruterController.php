@@ -9,6 +9,7 @@ use App\Form\RecruterType;
 use App\Repository\CandidateRepository;
 use App\Repository\LikeRepository;
 use App\Repository\RecruterRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,6 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route('/recruter')]
 class RecruterController extends AbstractController
 {
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/', name: 'app_recruter_index', methods: ['GET'])]
     public function index(RecruterRepository $recruterRepository, CandidateRepository $candidateRepository, LikeRepository $likeRepository): Response
     {
@@ -34,6 +36,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/new', name: 'app_recruter_new', methods: ['GET', 'POST'])]
     public function new(Request $request, RecruterRepository $recruterRepository, TranslatorInterface $translator): Response
     {
@@ -64,6 +67,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/{id}', name: 'app_recruter_show', methods: ['GET'])]
     public function show(Recruter $recruter, CandidateRepository $candidateRepository): Response
     {
@@ -75,6 +79,7 @@ class RecruterController extends AbstractController
         ]);
     }
 
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/{id}/edit', name: 'app_recruter_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recruter $recruter, RecruterRepository $recruterRepository, TranslatorInterface $translator): Response
     {
@@ -100,14 +105,16 @@ class RecruterController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_recruter_delete', methods: ['POST'])]
-    public function delete(Request $request, Recruter $recruter, RecruterRepository $recruterRepository, SessionInterface $session, TranslatorInterface $translator): Response
+    #[IsGranted('ROLE_RECRUTER')]
+    #[Route('/{id}', name: 'app_recruter_delete')]
+    public function delete(Request $request, Recruter $recruter, RecruterRepository $recruterRepository, SessionInterface $session, TranslatorInterface $translator, LikeRepository $likeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$recruter->getId(), $request->request->get('_token'))) {
             $session = new Session();
             $session->invalidate();
-            $recruterRepository->remove($recruter, true);
 
+            $likeRepository->removeLikesBy(null, $recruter);
+            $recruterRepository->remove($recruter, true);
             $this->addFlash('success', $translator->trans('The profil has been deleted successfully.'));
 
         }else {
@@ -117,6 +124,7 @@ class RecruterController extends AbstractController
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/like/{id}', name: 'app_recruter_like', methods: ['GET'])]
     public function likeRecruter(Request $request, Recruter $recruter, LikeRepository $likeRepository, CandidateRepository $candidateRepository): Response
     {
