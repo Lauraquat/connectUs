@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+{% block header %}
+    <div>
+        <div class="headerContainerPageRegister">
+            <div class="headerWelcomeRegister">
+                <a class="btn profileButton" href="{{ path('home') }}">{% trans %}Homepage{% endtrans %}</a>
+                <a class="btn profileButton" href="{{ path('app_register') }}">{% trans %}Register{% endtrans %}</a>
+            </div>
+            <div class="headerContainerRegister"></div>
+        </div>
+    </div>
+{% endblock %}
+{% block body %}
+    <div class="containerPageRegister">
+        <div class="welcomeRegister">
+            <div>
+                <p class="RegisterInformation">{% trans %}Welcome on ConnectUs,{% endtrans %}</p>
+                <p class="registerSubtitle">{% trans %}The website to find your new job or your future employee!{% endtrans %}</p>
+            </div>
+        </div>
+
+        <div class="containerRegister">
+            <form method="post">
+                {% if error %}
+                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+
+                <h1 class="connexionTitle">{% trans %}Login{% endtrans %}</h1>
+                <div class="formRegistration">
+                    <label for="inputEmail">{% trans %}Email{% endtrans %}</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                </div>
+
+                <div class="formRegistration">
+                    <label for="inputPassword">{% trans %}Password{% endtrans %}</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                </div>
+
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+
+                <button class="btn buttonRegister" type="submit">
+                    {% trans %}Login{% endtrans %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

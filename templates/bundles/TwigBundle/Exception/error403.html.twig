@@ -1,0 +1,33 @@
+
+{% block body %}
+    <div style="display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 2rem; 
+                color: #3D4E63;"
+    >
+        <img class="errorPicture" alt="{% trans %}Error picture{% endtrans %}" style="width: 35rem"
+             src="{{ asset('images/error.jpg') }}"
+        />
+        <h1 style="font-size: 40px; font-weight: 800; margin: 0">
+            {% trans %}Access Denied{% endtrans %}
+        </h1>
+
+        <p style="font-size: 16px;">
+            {% trans %}You do not have access to this page please return to the home page{% endtrans %}
+        </p>
+        <a style="background-color: #3D4E63;
+                color: white; 
+                border: none;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                border-radius: 5px"
+           href="{{ path('home') }}"
+        >
+            {% trans %}Homepage{% endtrans %}
+        </a>
+    </div>
+{% endblock %}

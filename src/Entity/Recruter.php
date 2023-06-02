@@ -24,7 +24,7 @@ class Recruter
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $address2 = null;
 
     #[ORM\Column(length: 255)]
@@ -134,33 +134,14 @@ class Recruter
         return $this;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
+    public function isCandidateLiked(Candidate $candidate): bool
     {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setRecruter($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getRecruter() === $this) {
-                $like->setRecruter(null);
+        foreach ($this->likes as $like) {
+            if ($like->getCandidate() === $candidate) {
+                return true;
             }
         }
 
-        return $this;
+        return false;
     }
 }

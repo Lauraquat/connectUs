@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Edit candidate{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="containerIndex">
+        <div class="titleAndButton">
+            <h1 class="titleIndex">{% trans %}Edit my profile{% endtrans %}</h1>
+            <div class="buttons">
+                {{ include('candidate/_delete_form.html.twig') }}
+                <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
+            </div>
+        </div>
+        <h2 class="subtitleNewProfile" >{% trans %}Update your profile so that recruters can know you better{% endtrans %}</h2>
+        {{ include('candidate/_form.html.twig', {'button_label': 'Update' |trans}) }}
+
+    </div>
+{% endblock %}

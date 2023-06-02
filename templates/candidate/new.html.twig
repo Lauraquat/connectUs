@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}New Candidate{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="containerIndex">
+        <div class="titleAndButton">
+            <h1 class="titleIndex">{% trans %}Create your profile{% endtrans %}</h1>
+            <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Back to list{% endtrans %}</a>
+        </div>
+        <h2 class="subtitleNewProfile">{% trans %}Create your profile so that recruters can know you better{% endtrans %}</h2>
+
+        {{ include('candidate/_form.html.twig') }}
+    </div>
+{% endblock %}

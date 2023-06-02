@@ -14,15 +14,13 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Like[]    findAll()
  * @method Like[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class LikeRepository extends ServiceEntityRepository
-{
-    public function __construct(ManagerRegistry $registry)
-    {
+class LikeRepository extends ServiceEntityRepository {
+
+    public function __construct(ManagerRegistry $registry) {
         parent::__construct($registry, Like::class);
     }
 
-    public function save(Like $entity, bool $flush = false): void
-    {
+    public function save(Like $entity, bool $flush = false): void {
         $this->getEntityManager()->persist($entity);
 
         if ($flush) {
@@ -30,8 +28,7 @@ class LikeRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Like $entity, bool $flush = false): void
-    {
+    public function remove(Like $entity, bool $flush = false): void {
         $this->getEntityManager()->remove($entity);
 
         if ($flush) {
@@ -39,28 +36,29 @@ class LikeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Like[] Returns an array of Like objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('l.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function recrutersWhoLikedCandidate(int $likedId): array{
+        // On créé le queryBuilder avec l'alias de l'entité concernée
+        $queryBuilder = $this->createQueryBuilder('l');
 
-//    public function findOneBySomeField($value): ?Like
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $queryBuilder->andWhere('l.likedType = :liked') //type du recruteur liké
+                     ->andWhere('l.recruter = :id') //id du recruteur connecté
+                     ->setParameter('liked', "Candidate")
+                     ->setParameter('id', $likedId)
+                     ->orderBy('l.date');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function candidatesWhoLikedRecruter(int $likedId): array{
+        // On créé le queryBuilder avec l'alias de l'entité concernée
+        $queryBuilder = $this->createQueryBuilder('l');
+
+        $queryBuilder->andWhere('l.likedType = :liked') //type du candidat liké
+                     ->andWhere('l.candidate = :id') //id du candidat connecté
+                     ->setParameter('liked', "Recruter")
+                     ->setParameter('id', $likedId)
+                     ->orderBy('l.date');
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

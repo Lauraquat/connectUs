@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% trans %}Recruters list{% endtrans %}{% endblock %}
+
+{% block body %}
+    <div class="containerIndex">
+        <div class="titleAndButton">
+            <h1 class="titleIndex">{% trans %}Discover our recruiters{% endtrans %} </h1>
+            {% if not app.user.hasProfile() %}
+                <a class="btn profileButton" href="{{ path('app_candidate_new') }}">Créer mon profil</a>
+            {% else %}
+                <a class="btn profileButton" href="{{ path('app_candidate_edit', {'id': app.user.candidate.id}) }}">{% trans %}Edit my profile{% endtrans %}</a>
+            {% endif %}
+        </div>
+        <div class="containerCards">
+            {% for recruter in recruters %}
+                {% include 'recruter/_profil_card.html.twig' %}
+            {% else %}
+                <tr>
+                    <td colspan="8">{% trans %}No recruters found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="containerIndex">
+        <div class="titleAndButton">
+            <h2 class="titleIndex">{% trans %}Recruters who liked me{% endtrans %}</h2>
+        </div>
+        <div class="containerCards">
+            {% for like in candidatesWhoLikedRecruter  %}
+                {% include 'recruter/_profil_card.html.twig' with {'recruter': like.recruter} %}
+            {% else %}
+                <tr>
+                    <td colspan="8">{% trans %}No recruter found{% endtrans %}</td>
+                </tr>
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CandidateRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,14 +20,17 @@ class Candidate
     #[ORM\Column(length: 255)]
     private ?string $city = null;
 
+    #[ORM\Column]
+    private ?int $postalCode = null;
+
     #[ORM\Column(length: 255)]
     private ?string $searchedPost = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $disponibility = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?DateTimeInterface $disponibility = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $cv = null;
+    #[ORM\Column(type: 'string')]
+    private ?string $CV = null;
 
     #[ORM\OneToOne(inversedBy: 'candidate', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
@@ -57,6 +61,18 @@ class Candidate
         return $this;
     }
 
+    public function getPostalCode(): ?int
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(int $postalCode): self
+    {
+        $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
     public function getSearchedPost(): ?string
     {
         return $this->searchedPost;
@@ -69,26 +85,26 @@ class Candidate
         return $this;
     }
 
-    public function getDisponibility(): ?\DateTimeInterface
+    public function getDisponibility(): ?DateTimeInterface
     {
         return $this->disponibility;
     }
 
-    public function setDisponibility(\DateTimeInterface $disponibility): self
+    public function setDisponibility(DateTimeInterface $disponibility): self
     {
         $this->disponibility = $disponibility;
 
         return $this;
     }
 
-    public function getCv(): ?string
+    public function getCV(): ?string
     {
-        return $this->cv;
+        return $this->CV;
     }
 
-    public function setCv(string $cv): self
+    public function setCV(?string $CV): self
     {
-        $this->cv = $cv;
+        $this->CV = $CV;
 
         return $this;
     }
@@ -105,33 +121,15 @@ class Candidate
         return $this;
     }
 
-    /**
-     * @return Collection<int, Like>
-     */
-    public function getLikes(): Collection
+    public function isRecruterLiked(Recruter $recruter): bool
     {
-        return $this->likes;
-    }
-
-    public function addLike(Like $like): self
-    {
-        if (!$this->likes->contains($like)) {
-            $this->likes->add($like);
-            $like->setCandidate($this);
-        }
-
-        return $this;
-    }
-
-    public function removeLike(Like $like): self
-    {
-        if ($this->likes->removeElement($like)) {
-            // set the owning side to null (unless already changed)
-            if ($like->getCandidate() === $this) {
-                $like->setCandidate(null);
+        foreach ($this->likes as $like) {
+            if ($like->getRecruter() === $recruter) {
+                return true;
             }
         }
 
-        return $this;
+        return false;
     }
+
 }

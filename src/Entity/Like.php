@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LikeRepository;
+use DateTime;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,14 +17,22 @@ class Like
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column]
+    private ?string $likedType = null;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $date = null;
 
-    #[ORM\ManyToOne(inversedBy: 'likes')]
+    #[ORM\ManyToOne(inversedBy: 'likedByCandidate')]
     private ?Candidate $candidate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'likes')]
+    #[ORM\ManyToOne(inversedBy: 'likedByRecruter')]
     private ?Recruter $recruter = null;
+
+    public function __construct()
+    {
+        $this->date = new DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -38,6 +47,18 @@ class Like
     public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getLikedType(): ?string
+    {
+        return $this->likedType;
+    }
+
+    public function setLikedType(string $likedType): self
+    {
+        $this->likedType = $likedType;
 
         return $this;
     }
