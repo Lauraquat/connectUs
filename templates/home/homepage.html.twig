@@ -16,12 +16,14 @@
                 {% else %}
                     <a class="btn homepageButton" href="{{ path("app_register")}}">{% trans %}Register{% endtrans %}</a>
                 {% endif %}
+
                 {% if is_granted('ROLE_USER') %}
                     <a class="btn homepageButton" href="{{ path('app_logout') }}">{% trans %}Logout{% endtrans %}</a>
                 {% else %}
                     <a class="btn homepageButton" href="{{ path('app_login') }}">{% trans %}Login{% endtrans %}</a>
                 {% endif %}
             </div>
+
             <img class="homePicture" src="{{ asset('images/home.jpg') }}" alt="Logo"/>
         </div>
 
@@ -30,6 +32,7 @@
             <p class="homepageInformation">
                 {% trans %}ConnectUs allows companies to find new employees. As a company you can look at the <br /> profiles of people with a candidate profile. On these profiles you can see general informations, disponibility and CV.{% endtrans %}
             </p>
+
             <p class="homepageInformation">
                 {% trans %}If you are looking for jobs, with ConnectUs, you have access to a multitude of profiles companies and the jobs they offer.{% endtrans %}
             </p>

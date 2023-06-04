@@ -31,13 +31,6 @@
             <div class="headerContainerPageRegister">
                 <div class="headerWelcomeRegister">
                     <a class="btn profileButton" href="{{ path('home') }}">{% trans %}Homepage{% endtrans %}</a>
-                    <!--
-                    {% if is_granted('ROLE_CANDIDATE') %}
-                        <a class="btn profileButton" href="{{ path('app_recruter_index') }}">{% trans %}Show recruters{% endtrans %}</a>
-                    {% elseif is_granted('ROLE_RECRUTER') %}
-                        <a class="btn profileButton" href="{{ path('app_candidate_index') }}">{% trans %}Show candidates{% endtrans %}</a>
-                    {% endif %}
-                    -->
                 </div>
                 <div class="headerContainerBase">
                     {% if is_granted('ROLE_USER') %}

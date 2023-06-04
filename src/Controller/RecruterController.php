@@ -113,8 +113,8 @@ class RecruterController extends AbstractController
             $session = new Session();
             $session->invalidate();
 
-            $likeRepository->removeLikesBy(null, $recruter);
             $recruterRepository->remove($recruter, true);
+
             $this->addFlash('success', $translator->trans('The profil has been deleted successfully.'));
 
         }else {
@@ -124,7 +124,7 @@ class RecruterController extends AbstractController
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[IsGranted('ROLE_RECRUTER')]
+    #[IsGranted('ROLE_CANDIDATE')]
     #[Route('/like/{id}', name: 'app_recruter_like', methods: ['GET'])]
     public function likeRecruter(Request $request, Recruter $recruter, LikeRepository $likeRepository, CandidateRepository $candidateRepository): Response
     {
