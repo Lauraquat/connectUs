@@ -151,19 +151,18 @@ class CandidateController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$candidate->getId(), $request->request->get('_token'))) {
             $session = new Session();
             $session->invalidate();
+
             $candidateRepository->remove($candidate, true);
 
             // Utilisation du TranslatorInterface (en paramètre de la fonction) pour effectuer les traductions (stockées dans translations/messages.fr.yaml)
             $this->addFlash('success', $translator->trans('The profil has been deleted successfully.'));
-
         }else {
             $this->addFlash('danger', $translator->trans('Invalid token.'));
         }
-
         return $this->redirectToRoute('home', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[IsGranted('ROLE_CANDIDATE')]
+    #[IsGranted('ROLE_RECRUTER')]
     #[Route('/like/{id}', name: 'app_candidate_like', methods: ['GET'])]
     public function likeCandidate(Request $request, Candidate $candidate, LikeRepository $likeRepository, RecruterRepository $recruterRepository): Response
     {

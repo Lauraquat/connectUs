@@ -12,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: '`like`')]
 class Like
 {
+    public const TYPE_CANDIDATE = 'Candidate';
+    public const TYPE_RECRUTER = 'Recruter';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -85,5 +88,15 @@ class Like
         $this->recruter = $recruter;
 
         return $this;
+    }
+
+    public function isCandidateLiked(Candidate $candidate): bool
+    {
+        return $this->candidate === $candidate && $this->likedType === self::TYPE_RECRUTER;
+    }
+
+    public function isRecruterLiked(Recruter $recruter): bool
+    {
+        return $this->recruter === $recruter && $this->likedType === self::TYPE_CANDIDATE;
     }
 }
