@@ -37,7 +37,7 @@ class Recruter
     #[ORM\JoinColumn(nullable: false)]
     private ?User $owner = null;
 
-    #[ORM\OneToMany(mappedBy: 'recruter', targetEntity: Like::class)]
+    #[ORM\OneToMany(mappedBy: 'recruter', targetEntity: Like::class, cascade: ['persist', 'remove'])]
     private Collection $likes;
 
     public function __construct()
@@ -137,7 +137,7 @@ class Recruter
     public function isCandidateLiked(Candidate $candidate): bool
     {
         foreach ($this->likes as $like) {
-            if ($like->getCandidate() === $candidate) {
+            if ($like->isCandidateLiked($candidate)) {
                 return true;
             }
         }
